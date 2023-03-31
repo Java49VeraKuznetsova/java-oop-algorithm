@@ -54,7 +54,7 @@ class ArrayListTest {
 		object.add(30);
 	    object.remove(0);
 	    object.remove(2);
-		object.remove(4);
+		object.remove(3);
 		assertEquals(10, object.get(0));
 		assertEquals(15, object.get(1));
 		assertEquals(25, object.get(2));

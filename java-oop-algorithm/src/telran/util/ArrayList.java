@@ -40,9 +40,10 @@ private void reallocate () {
 		if(size == array.length) {
 			reallocate();
 		}
-		System.arraycopy(array, 0, array, 0, index);
+		//System.arraycopy(array, 0, array, 0, index);
 		
-		System.arraycopy(array, index, array, index+1, size-index);
+	 System.arraycopy(array, index, array, index+1, size-index);
+		
 		array[index] = obj;
 		size++;
 	}
@@ -51,8 +52,11 @@ private void reallocate () {
 	public T remove(int index) {
 		// TODO Auto-generated method stub
 		T remObj = array[index];
-		System.arraycopy(array, 0, array, 0, index);
-	    System.arraycopy(array, index+1, array, index, array.length-1-index);
+		//this is not necessary, because doesn't copy array
+		//System.arraycopy(array, 0, array, 0, index);
+		System.arraycopy(array, index+1, array, index, size-1-index);
+		// here we copy end with nulls
+	  //  System.arraycopy(array, index, array, index+1, array.length-1-index);
 	    size--;
 		return remObj;
 	}
