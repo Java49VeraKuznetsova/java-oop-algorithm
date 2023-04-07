@@ -1,5 +1,6 @@
 package telran.util.test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -109,8 +110,51 @@ void setUp() {
 	@Test
 	void testIndexOf() {
 	list.add(3,10);
+	
 	assertEquals(0, list.indexOf(10));
 	assertEquals(-1, list.indexOf(null));
+	}
+	@Test
+	void testLastIndexOf() {
+		
+		list.add(3,10);
+		assertEquals(6,list.lastIndexOf(30));
+		assertEquals(3,list.lastIndexOf(10));
+		assertEquals(1,list.lastIndexOf(-20));
+		assertEquals(-1, list.lastIndexOf(null));
+		list.add(10);
+		assertEquals(7,list.lastIndexOf(10));
+	}
+	
+	@Test
+	void testRemovePattern () {
+	
+		// This is mistake - why
+		//assertTrue(list.remove(30));
+		
+		assertTrue(list.remove(list.get(5)));
+		assertFalse(list.remove(list.get(5)));
+	}
+	
+	@Test
+	void testToArray () {
+		Integer[] numbers2 = {10, -20, 7, 50, 100, 30, null};
+		
+		
+		Integer[] arr1 = new Integer[list.size()];
+		Integer[] arr2 = new Integer[list.size()-1];
+		Integer[] arr3 = new Integer[list.size()+1];
+		
+		assertArrayEquals(numbers, list.toArray(numbers));
+	
+		assertArrayEquals(numbers, list.toArray(arr1));
+		assertArrayEquals(numbers, list.toArray(arr2));
+		assertArrayEquals(numbers2, list.toArray(arr3));
+		
+		
+		
+		
+		
 	}
 	private void runTest(Integer[] expected) {
 		int size = list.size();
@@ -122,4 +166,5 @@ void setUp() {
 		assertArrayEquals(expected, actual);
 	}
 
+	
 }
