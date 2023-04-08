@@ -26,42 +26,13 @@ void setUp() {
 	void testAdd() {
 		assertTrue(list.add(numbers[0]));
 		assertEquals(numbers.length+1, list.size());
-		
-		/* Old testes
-		ArrayList<Integer> numbers = new ArrayList<>();
-		ArrayList<String> strings = new ArrayList<>();
-		numbers.add(5);
-		numbers.add(10);
-		strings.add("abc");
-		assertEquals(2, numbers.size());
-		assertEquals(1, strings.size());
-		*/
+	
 		
 	};
 
 	@Test
 	void TestAddIndex() {
-		/*
-		ArrayList<Integer> object = new ArrayList<>();
-		object.add(5);
-		object.add(10);
-		object.add(15);
-		object.add(20);
-		object.add(25);
-		object.add(2, 100);
-		object.add(0, 50);
-		object.add(7, 30);
-	    assertEquals(5, object.get(1));
-		assertEquals(25, object.get(6));
-		assertEquals(10, object.get(2));
-		assertEquals(50, object.get(0));
-		assertEquals(100, object.get(3));
-		assertEquals(15, object.get(4));
-		assertEquals(20, object.get(5));
-		assertEquals(30, object.get(7));
 		
-		assertEquals(8, object.size());
-		*/
 		Integer [] expected0_500 = {500, 10, -20, 7, 50, 100, 30};
 		Integer [] expected0_500_3_700 = {500, 10, -20, 700, 7, 50, 100, 30};
 	    Integer [] expected0_500_3_700_8_300 = 	
@@ -90,22 +61,7 @@ void setUp() {
 		assertEquals(30, list.remove(3));
 		runTest(expectedNo10_50_30);
 		
-		/*
-		ArrayList<Integer> object = new ArrayList<>();
-		object.add(5);
-		object.add(10);
-		object.add(15);
-		object.add(20);
-		object.add(25);
-		object.add(30);
-	    object.remove(0);
-	    object.remove(2);
-		object.remove(3);
-		assertEquals(10, object.get(0));
-		assertEquals(15, object.get(1));
-		assertEquals(25, object.get(2));
-		assertEquals(3,object.size());
-		*/
+	
 	}
 	@Test
 	void testIndexOf() {
@@ -129,11 +85,29 @@ void setUp() {
 	@Test
 	void testRemovePattern () {
 	
-		// This is mistake - why
-		//assertTrue(list.remove(30));
-		
+		// remove 30
 		assertTrue(list.remove(list.get(5)));
 		assertFalse(list.remove(list.get(5)));
+		Integer x = -20;
+		Integer y = 30;
+		
+		// add -20 in the middle and in the end
+		list.add(3, x);
+		list.add(5, x);
+	;
+		// check - that we remove 30 in line 133;
+		assertFalse(list.remove(y));
+		//remove -20 with index 1, -20 by index 2 and 4 - is in the list
+		assertTrue (list.remove(x));
+		assertEquals(7, list.get(1));
+		assertEquals(-20, list.get(2));
+		assertEquals(-20, list.get(4));
+		assertTrue (list.remove(x));
+		assertEquals(7, list.get(1));
+		assertEquals(-20, list.get(3));
+		assertTrue(list.remove(x));
+		//no more -20
+		assertFalse(list.remove(x));
 	}
 	
 	@Test
@@ -145,8 +119,7 @@ void setUp() {
 		Integer[] arr2 = new Integer[list.size()-1];
 		Integer[] arr3 = new Integer[list.size()+1];
 		
-		//assertArrayEquals(numbers, list.toArray(numbers));
-	
+			
 		assertArrayEquals(numbers, list.toArray(arr1));
 		assertArrayEquals(numbers, list.toArray(arr2));
 		assertArrayEquals(numbers2, list.toArray(arr3));

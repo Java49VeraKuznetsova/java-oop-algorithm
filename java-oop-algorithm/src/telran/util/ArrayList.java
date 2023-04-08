@@ -71,7 +71,7 @@ private void reallocate () {
 	}
 	@Override
 	public boolean remove(T pattern) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		int index = indexOf(pattern);
 		boolean res = false;
 		if (index >= 0) {
@@ -82,21 +82,18 @@ private void reallocate () {
 		return res;
 	}
 	@Override
-	public T[] toArray(T[] arr) {
-		// TODO Auto-generated method stub
-		T[] arrayNew  = arr;
-		//Integer[] arr1 = new Integer[list.size()];
+	public T[] toArray(T[] array) {
+		//  Auto-generated method stub
+		T[] arrayNew  = array;
+		
 		if (arrayNew.length < size) {
 			
-			arrayNew = Arrays.copyOf(array, size);
+			arrayNew = Arrays.copyOf(this.array, size);
 		//	arrayNew = (T[]) Arrays.copyOf(array, size, arrayNew.getClass());
-		/*	
-			arrayNew = (T[])new Object[size];
-			System.arraycopy(array, 0, arrayNew, 0, size);
-			*/
+		
 		}
 		else {
-			System.arraycopy(array, 0, arrayNew, 0, size);
+			System.arraycopy(this.array, 0, arrayNew, 0, size);
 			if (arrayNew.length > size) {
 				arrayNew[size] = null;
 			}
@@ -122,7 +119,7 @@ private void reallocate () {
 	}
 	@Override
 	public int lastIndexOf(T pattern) {
-		// TODO Auto-generated method stub
+		//  Auto-generated method stub
 		int res = -1;
 		int index = size-1;
 		while (index >= 0 && res == -1) {
