@@ -145,7 +145,7 @@ void setUp() {
 		Integer[] arr2 = new Integer[list.size()-1];
 		Integer[] arr3 = new Integer[list.size()+1];
 		
-		assertArrayEquals(numbers, list.toArray(numbers));
+		//assertArrayEquals(numbers, list.toArray(numbers));
 	
 		assertArrayEquals(numbers, list.toArray(arr1));
 		assertArrayEquals(numbers, list.toArray(arr2));

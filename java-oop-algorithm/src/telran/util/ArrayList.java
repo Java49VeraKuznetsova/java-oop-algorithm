@@ -82,9 +82,9 @@ private void reallocate () {
 		return res;
 	}
 	@Override
-	public T[] toArray(T[] array) {
+	public T[] toArray(T[] arr) {
 		// TODO Auto-generated method stub
-		T[] arrayNew  = array;
+		T[] arrayNew  = arr;
 		//Integer[] arr1 = new Integer[list.size()];
 		if (arrayNew.length < size) {
 			
