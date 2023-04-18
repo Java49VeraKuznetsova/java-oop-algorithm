@@ -1,6 +1,7 @@
 package telran.util;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ArrayList<T> implements List<T> {
 	//for one test only!
@@ -71,7 +72,7 @@ private void reallocate () {
 	}
 	@Override
 	public boolean remove(T pattern) {
-		// Auto-generated method stub
+	
 		int index = indexOf(pattern);
 		boolean res = false;
 		if (index >= 0) {
@@ -81,25 +82,7 @@ private void reallocate () {
 		
 		return res;
 	}
-	@Override
-	public T[] toArray(T[] array) {
-		//  Auto-generated method stub
-		T[] arrayNew  = array;
-		
-		if (arrayNew.length < size) {
-			
-			arrayNew = Arrays.copyOf(this.array, size);
-		//	arrayNew = (T[]) Arrays.copyOf(array, size, arrayNew.getClass());
-		
-		}
-		else {
-			System.arraycopy(this.array, 0, arrayNew, 0, size);
-			if (arrayNew.length > size) {
-				arrayNew[size] = null;
-			}
-		}
-		return arrayNew;
-	}
+
 	@Override
 	public int indexOf(T pattern) {
 		int res = -1;
@@ -119,7 +102,6 @@ private void reallocate () {
 	}
 	@Override
 	public int lastIndexOf(T pattern) {
-		//  Auto-generated method stub
 		int res = -1;
 		int index = size-1;
 		while (index >= 0 && res == -1) {
@@ -131,5 +113,72 @@ private void reallocate () {
 		
 		return res;
 	}
+	// Yuri's code
+	@Override
+	public T[] toArray(T[] ar) {
+		if (ar.length < size) {
+			ar = Arrays.copyOf(ar, size);
+		}
+		System.arraycopy(array, 0, ar, 0, size);
+		if (ar.length > size) {
+			ar[size] = null;
+		}
+
+		return ar;
+	}
+	
+	@Override
+	public void sort() {
+		Arrays.sort(array, 0, size);
+		
+	}
+	
+	
+	@Override
+	public void sort(Comparator<T> comp) {
+		Arrays.sort(array,  0, size, comp);
+					
+	}
+	/*
+	@Override
+	public void sort (Comparator<T> comp) {
+		
+		for (int i=0; i<size-1; i++) {
+           for (int j=0; j<size-1-i; j++) {
+          if(comp.compare(array[j], array[j])>0){
+        	 T tmp = array[j+1];
+        	 array[j+1] = array[j];
+        	 array[j] = tmp;
+          
+}
+			}
+		}
+		
+	}
+	*/
+	
+/* My code
+	@Override
+	public T[] toArray(T[] array) {
+		//  Auto-generated method stub
+		T[] arrayNew  = array;
+		
+		if (arrayNew.length < size) {
+			
+			arrayNew = Arrays.copyOf(this.array, size);
+		//	arrayNew = (T[]) Arrays.copyOf(array, size, arrayNew.getClass());
+		
+		}
+		else {
+			System.arraycopy(this.array, 0, arrayNew, 0, size);
+			if (arrayNew.length > size) {
+				arrayNew[size] = null;
+			}
+		}
+		return arrayNew;
+	}
+	*/
+	
+	
 
 }
