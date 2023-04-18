@@ -179,6 +179,8 @@ void setUp() {
 	void testSort2() {
 		Integer expected[] = {-20, 7, 10, 30,  50, 100 };
 		list.sort(new bubbleSort());
+		
+		
 		assertArrayEquals(expected,
 				list.toArray(new Integer[0]));
 	}
