@@ -142,7 +142,7 @@ private void reallocate () {
 	*/
 	@Override
 	public void sort (Comparator<T> comp) {
-		
+		// may by shorter - as a webinar
 		for (int i=0; i<size-1; i++) {
            for (int j=0; j<size-1-i; j++) {
           if(comp.compare(array[j], array[j+1])>0){
