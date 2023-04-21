@@ -2,6 +2,7 @@ package telran.util;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class ArrayList<T> implements List<T> {
 	//for one test only!
@@ -154,30 +155,50 @@ private void reallocate () {
 		}
 		
 	}
-	
-	
-/* My code
 	@Override
-	public T[] toArray(T[] array) {
-		//  Auto-generated method stub
-		T[] arrayNew  = array;
-		
-		if (arrayNew.length < size) {
-			
-			arrayNew = Arrays.copyOf(this.array, size);
-		//	arrayNew = (T[]) Arrays.copyOf(array, size, arrayNew.getClass());
-		
+	public int indexOf(Predicate<T> predicate) {
+		int res = -1;
+		int index = 0;
+		while (index < size && res == -1) {
+			if (predicate.test(array[index])) {
+				res = index;
+			}
+			index++;
 		}
-		else {
-			System.arraycopy(this.array, 0, arrayNew, 0, size);
-			if (arrayNew.length > size) {
-				arrayNew[size] = null;
+		return res;
+		
+	}
+	@Override
+	public int lastIndexOf(Predicate<T> predicate) {
+		//  Auto-generated method stub
+		int res = -1;
+		int index = size-1;
+		while (index >= 0 && res == -1) {
+			if (predicate.test(array[index])) {
+				res = index;
+			}
+			index--;
+		}
+		return res;
+	}
+	@Override
+	public boolean removeIf(Predicate<T> predicate) {
+		//  Auto-generated method stub
+		boolean res = false;
+	
+		for (int i=size-1; i>=0; i--) {
+			if (predicate.test(array[i])) {
+				remove(i);
+				res = true;  
 			}
 		}
-		return arrayNew;
-	}
-	*/
 	
+		return res;
+	}
+
+	
+	
+
 	
 
 }
