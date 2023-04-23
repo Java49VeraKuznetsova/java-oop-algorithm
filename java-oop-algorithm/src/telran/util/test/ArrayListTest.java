@@ -64,6 +64,7 @@ void setUp() {
 		
 	
 	}
+	
 	@Test
 	void testIndexOf() {
 	list.add(3,10);
@@ -240,6 +241,20 @@ void setUp() {
 		assertEquals(-1, list.lastIndexOf(a -> a % 2 == 0 && a > 100) );
 		list.add(-20);
 		assertEquals(7, list.lastIndexOf(a -> a<-19));
+	}
+	@Test
+	void testRemoveifAll() {
+		assertTrue(list.removeIf(a -> true));
+		assertEquals(0, list.size());
+		
+	}
+	@Test
+	void testRemovePredicateCW() {
+		Integer[] expected = {10, -20, 50, 100, 30};
+		assertFalse(list.removeIf(a -> a % 2 != 0 
+				&& a >= 10));
+		assertTrue(list.removeIf(a -> a % 2 != 0 ));
+		runTest(expected);
 	}
 	
 	@Test 

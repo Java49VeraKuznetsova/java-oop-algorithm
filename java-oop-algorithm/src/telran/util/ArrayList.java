@@ -136,6 +136,12 @@ private void reallocate () {
 	
 	/*
 	@Override
+	public void sort() {
+		sort((Comparator<T>)Comparator.naturalOrder());
+		}
+*/
+	/*
+	@Override
 	public void sort(Comparator<T> comp) {
 		Arrays.sort(array,  0, size, comp);
 					
@@ -184,6 +190,7 @@ private void reallocate () {
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		//  Auto-generated method stub
+		/* This is my code
 		boolean res = false;
 	
 		for (int i=size-1; i>=0; i--) {
@@ -194,6 +201,26 @@ private void reallocate () {
 		}
 	
 		return res;
+		*/
+		int oldSize = size;
+		//int i=0;
+		/* correct from Yuri
+		while (i < size) {
+			if (predicate.test(array[i])) {
+				remove(i);
+			} else {
+				i++;
+			}
+		}
+		
+		*/
+		// code in CW 
+		for (int i = size -1; i>=0; i--) {
+			if (predicate.test(array[i])) {
+				remove(i);
+			}
+		}
+		return oldSize > size;
 	}
 
 	
