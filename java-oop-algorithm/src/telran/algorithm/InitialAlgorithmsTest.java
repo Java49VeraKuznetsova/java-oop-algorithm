@@ -84,11 +84,14 @@ int N_NUMBERS = 100000;
 	void binarySearch2Test () {
 		Integer [] array = 
 			{-5,-3,1,2,3,3,3,3,5,6,7,8,9,10,11,12,12,13,14,15,16};
-		//assertEquals(4, InitialAlgorithms.binarySearch2(array, 3, Comparator.naturalOrder()));
-	//	assertEquals(4, InitialAlgorithms.binarySearch2(array, 3, Comparator.naturalOrder()));
+
 		assertEquals(4, binarySearch2(array, 3, Comparator.naturalOrder()));
 		assertEquals(4, binarySearch2(array, 3, ((a, b) -> a - b)));
-	//	assertEquals(4, InitialAlgorithms.binarySearchFirstSymbol(array, 3, Integer::compareTo());
+		assertEquals(-1, binarySearch2(array, 100, Comparator.naturalOrder()));
+		assertEquals(20, binarySearch2(array, 16, Comparator.naturalOrder()));
+		assertEquals(0, binarySearch2(array, -5, Comparator.naturalOrder()));
+		assertEquals(15, binarySearch2(array, 12, Comparator.naturalOrder()));
+
 	}
 	
 	private Integer getmaxValueComplexityN() {
