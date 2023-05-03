@@ -1,5 +1,7 @@
 package telran.algorithm;
 
+import java.util.Comparator;
+
 public class InitialAlgorithms {
 	 public static void sortShortPositive(short [] array) {
 		 //array - array of the positive short numbers
@@ -21,7 +23,9 @@ public class InitialAlgorithms {
 	 
 	 public static void bubbleSort(short[] array) {
 		 int n = array.length;
-		 boolean flUnSort = true;
+		 //boolean flUnSort = true;
+		 //Yuri:
+		 boolean flUnSort = false;
 		 do {
 			 flUnSort = false;
 			 n--;
@@ -41,59 +45,121 @@ public class InitialAlgorithms {
 			array[i + 1] = tmp;
 			
 		}
-	 // loop doesn't end
-	 public static boolean isSum(short[]array, short sum) {
+	 // Yuri's code
+	 
+	 
+	 
+	 
+	 
+	 
+	 public static boolean isSum2(short[]array, short sum) {
+		 // array of the positive short numbers
 		 //returns true if there are two numbers in the given array,
 		 //sum of which equals the given sum value
 		 //Otherwise false
-		 //TODO
-	    sortShortPositive(array);
-		
-		 int begInd  = 0;
-		 int endInd = array.length-1;
-		 boolean fl = false;
-		 
-		 do {
-			 //why additional short?
-			 short curSum = (short) (array[begInd]+array[endInd]);
-			 if (curSum < sum) {
-				 begInd++;
-			 }
-			 else if (curSum > sum) {
-				 endInd--;
-			 }
-			 else {
-				 fl = true;
-				 }
-		 } while(begInd != endInd);
-		 
-		 return fl;
+		 int helperSize = sum < 0 ? Short.MAX_VALUE + 1 : sum + 1;
+			boolean[] helper = new boolean[helperSize];
+			boolean res = false;
+			int index = 0;
+			while (index < array.length && !res) {
+				short value = array[index];
+				short secondValue = (short) (sum - value);
+				if (secondValue >= 0) {
+					if (helper[secondValue]) {
+						res = true;
+					} else {
+						helper[value] = true;
+					}
+				}
+				index++;
+			}
+			return res;
+	   
+	 
 	 }
-	 // error
+	 
+	
 	 public static short getMaxPositiveWithNegativeReflect(short[] array) {
 		 //return maximal positive number, for which there is the negative image
 		 //if there are not such numbers at all the method returns -1
 		 //TODO
-		 short res = -1;
-		 int begInd = 0;
-		 int endInd = array.length-1;
-		 sortShortPositive(array);
-		 do {
-			 if (Math.abs(array[begInd]) > array[endInd]) {
-				 begInd++;
-			 }
-			 else if (Math.abs(array[begInd]) < array[endInd]) {
-				 endInd--;
-			 }
-			 else {
-				if (array[endInd] > res) {
-					res = array[endInd];
-					 begInd++;
-				
+			short res = -1;
+			byte[] helper = new byte[Short.MAX_VALUE];
+			short candidate = -1;
+			for (int i = 0; i < array.length; i++) {
+				candidate = (short) Math.abs(array[i]);
+				if (array[i] < 0) {
+
+					res = getRes(res, helper, candidate, 1);
+				} else {
+					res = getRes(res, helper, candidate, -1);
 				}
-			 }
-		 } while (begInd != endInd || array[begInd]<0);
-		 return res;
+			}
+
+			return res;
 	 }
 
+	 private static short getRes(short res, byte[] helper, short candidate, int sign) {
+			if (helper[candidate] == 1 * sign && candidate > res) {
+				res = candidate;
+			} else if (helper[candidate] == 0) {
+				helper[candidate] =  (byte) (-1 * sign);
+			}
+			return res;
+		}
+	 
+	public static <T> int binarySearch(T [] array, T key, Comparator<T> comp) {
+		int leftIndex = 0;
+		int rightIndex = array.length-1;
+		int middleIndex = rightIndex / 2;
+		int compRes = 0;
+		while (leftIndex <= rightIndex && 
+				(compRes = comp.compare(key, array[middleIndex])) != 0) {
+		if (compRes > 0) {
+			//move to right part of the array
+			leftIndex = middleIndex+1;
+				} else {
+					rightIndex = middleIndex -1;
+				}
+		middleIndex = (leftIndex+rightIndex)/2;
+		}
+		return leftIndex > rightIndex ? -1 : middleIndex;
+	
+	}
+	
+	public static <T> int binarySearch2(T [] array, T key, Comparator<T> comp) {
+		int leftIndex = 0;
+		int rightIndex = array.length-1;
+		int middleIndex = rightIndex / 2;
+		int compRes = 0;
+		int currentIndex=-1;
+		int res = -1;
+		
+		do {
+			
+		
+		while (leftIndex <= rightIndex && 
+				(compRes = comp.compare(key, array[middleIndex])) != 0) {
+		if (compRes > 0) {
+			//move to right part of the array
+			leftIndex = middleIndex+1;
+				} else {
+					rightIndex = middleIndex -1;
+				}
+		middleIndex = (leftIndex+rightIndex)/2;
+		}
+		if (leftIndex <= rightIndex) {
+			currentIndex = middleIndex;
+			rightIndex = middleIndex-1;
+			middleIndex = (leftIndex+rightIndex)/2;
+		}
+		} while (leftIndex <= rightIndex);
+		
+		
+		
+		return currentIndex;
+	
+	}
 }
+
+
