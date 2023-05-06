@@ -5,7 +5,7 @@ public static int getMaxAvailableSize() {
 
 	
 //	boolean running = true;
-	int left = 1;
+	int left = 0;
 	int right = Integer.MAX_VALUE;
 	int middle = right/2;
 	int res=0;
