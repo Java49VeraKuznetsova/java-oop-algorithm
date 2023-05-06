@@ -107,7 +107,8 @@ public class InitialAlgorithms {
 			}
 			return res;
 		}
-	 
+	 // CW 8
+	 /*
 	public static <T> int binarySearch(T [] array, T key, Comparator<T> comp) {
 		int leftIndex = 0;
 		int rightIndex = array.length-1;
@@ -126,7 +127,7 @@ public class InitialAlgorithms {
 		return leftIndex > rightIndex ? -1 : middleIndex;
 	
 	}
-	
+	*/
 	public static <T> int binarySearch2(T [] array, T key, Comparator<T> comp) {
 		int leftIndex = 0;
 		int rightIndex = array.length-1;
@@ -160,6 +161,23 @@ public class InitialAlgorithms {
 		return currentIndex;
 	
 	}
+	// HW 8
+	public static <T> int binarySearch(T[] array, T key, Comparator<T> comp) {
+		int left = 0;
+		int right = array.length - 1;
+		int middle = right / 2;
+		while (left <= right && comp.compare(key, array[left])!= 0) {
+			if (comp.compare(key, array[middle]) <= 0) {
+				right = middle - 1;
+			} else {
+				left = middle + 1;
+			}
+			middle = (right + left) / 2;
+		}
+		return left < array.length && comp.compare(key, array[left])== 0 ?
+				left : -left - 1;
+	}
 }
+
 
 
