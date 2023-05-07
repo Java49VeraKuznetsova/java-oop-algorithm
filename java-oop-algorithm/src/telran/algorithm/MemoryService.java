@@ -20,8 +20,7 @@ public static int getMaxAvailableSize() {
 
 			left = middle+1;
 			res = middle;
-			array = null;
-	
+		
 			
 		} catch(OutOfMemoryError e) {
 			
