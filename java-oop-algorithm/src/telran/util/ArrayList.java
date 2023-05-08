@@ -38,9 +38,13 @@ private void reallocate () {
 
 	@Override
 	public void add(int index, T obj) {
+		  
+			checkIndexException(index, size, false);
+		/*
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException(index);
 		}
+		*/
 		if(size == array.length) {
 			reallocate();
 		}
@@ -63,7 +67,7 @@ private void reallocate () {
    }
 
   */
-    checkIndexExseption(index, size);
+    checkIndexException(index, size, true);
 		T remObj = array[index];
 		//this is not necessary, because doesn't copy array
 		//System.arraycopy(array, 0, array, 0, index);
@@ -76,23 +80,29 @@ private void reallocate () {
 
 	@Override
 	public T get(int index) {
-		// repeat of the code here and in remove:
+		// repeat of the code here and in remove and in add:
 				/*
 		   if (index <0 || index >= size) {
 			   throw new IndexOutOfBoundsException(index);
 		   }
 
 		  */
-		checkIndexExseption(index, size);
+		checkIndexException(index, size, true);
 		
 		T res = array[index];
 		return res;
 	}
 	
-	private static void checkIndexExseption(int index, int size) {
-		 if (index <0 || index >= size) {
+	private static void checkIndexException(int index, int size, boolean eq) {
+		if (eq) {
+		if (index <0 || index >= size) {
 			   throw new IndexOutOfBoundsException(index);
 		   }
+		} else {
+			if (index <0 || index > size) {
+				   throw new IndexOutOfBoundsException(index);
+			   }
+		}
 	}
 	@Override
 	public boolean remove(T pattern) {
