@@ -38,7 +38,9 @@ private void reallocate () {
 
 	@Override
 	public void add(int index, T obj) {
-		// Auto-generated method stub
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException(index);
+		}
 		if(size == array.length) {
 			reallocate();
 		}
@@ -54,7 +56,14 @@ private void reallocate () {
 
 	@Override
 	public T remove(int index) {
-		//  Auto-generated method stub
+		// repeat of the code here and in get:
+		/*
+   if (index <0 || index >= size) {
+	   throw new IndexOutOfBoundsException(index);
+   }
+
+  */
+    checkIndexExseption(index, size);
 		T remObj = array[index];
 		//this is not necessary, because doesn't copy array
 		//System.arraycopy(array, 0, array, 0, index);
@@ -67,9 +76,23 @@ private void reallocate () {
 
 	@Override
 	public T get(int index) {
-		//  Auto-generated method stub
+		// repeat of the code here and in remove:
+				/*
+		   if (index <0 || index >= size) {
+			   throw new IndexOutOfBoundsException(index);
+		   }
+
+		  */
+		checkIndexExseption(index, size);
+		
 		T res = array[index];
 		return res;
+	}
+	
+	private static void checkIndexExseption(int index, int size) {
+		 if (index <0 || index >= size) {
+			   throw new IndexOutOfBoundsException(index);
+		   }
 	}
 	@Override
 	public boolean remove(T pattern) {

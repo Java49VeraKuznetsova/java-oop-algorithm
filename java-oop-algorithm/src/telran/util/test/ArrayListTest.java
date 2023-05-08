@@ -44,10 +44,22 @@ void setUp() {
 	    runTest(expected0_500_3_700);
 	    list.add(8, 300);
 	    runTest(expected0_500_3_700_8_300);
+	    
+	    assertThrowsExactly(IndexOutOfBoundsException.class, 
+	    		() -> list.add(list.size()+1, 345));
+	    assertThrowsExactly(IndexOutOfBoundsException.class, 
+	    		() -> list.add(-25, 345));
 	}
 	@Test
 	void testGetIndex() {
 		assertEquals(10, list.get(0));
+		//list.get(list.size());
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.get(list.size()));
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.get(list.size()+10));
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.get(-25));
 	}
 
 	@Test
@@ -61,6 +73,12 @@ void setUp() {
 		runTest(expectedNo10_50);
 		assertEquals(30, list.remove(3));
 		runTest(expectedNo10_50_30);
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.remove(list.size()));
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.remove(-33));
+		assertThrowsExactly(IndexOutOfBoundsException.class, 
+				() -> list.remove(list.size()+15));
 		
 	
 	}
