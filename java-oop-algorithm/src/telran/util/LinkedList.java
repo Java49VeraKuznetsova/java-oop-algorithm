@@ -33,8 +33,7 @@ private static class Node<T>{
 
 	@Override
 	public boolean remove(T pattern) {
-		// TODO Auto-generated method stub
-		
+		//  Auto-generated method stub
 			int index = indexOf(pattern);
 			boolean res = false;
 			if (index >= 0) {
@@ -75,18 +74,13 @@ private static class Node<T>{
 
 	@Override
 	public T remove(int index) {
-		// TODO Auto-generated method stub
+		//  Auto-generated method stub
 		if (index <0 || index >= size) {
 			   throw new IndexOutOfBoundsException(index);
 		   }
-		//T remObj = array[index];
-		Node<T> nodeToRemove = getNode(index);
-	
-		//T remObj = getNode(index).obj;
-		removeNode(nodeToRemove);
-	//remove(index);
-		//return remObj;
-		return nodeToRemove.obj;
+				Node<T> nodeToRemove = getNode(index);
+			removeNode(nodeToRemove);
+			return nodeToRemove.obj;
 			}
 
 
@@ -95,13 +89,12 @@ private static class Node<T>{
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException(index);
 		}
-		
-		return getNode(index).obj;
+				return getNode(index).obj;
 	}
 
 	@Override
 	public int indexOf(T pattern) {
-		// TODO Auto-generated method stub
+		//  Auto-generated method stub
 		int res = -1;
 		int index = 0;
 		while (index < size && res == -1) {
@@ -117,7 +110,7 @@ private static class Node<T>{
 
 	@Override
 	public int lastIndexOf(T pattern) {
-		// TODO Auto-generated method stub
+		//  Auto-generated method stub
 		int res = -1;
 		int index = size-1;
 		while (index>=0 && res == -1) {
@@ -248,11 +241,7 @@ private Node<T> getNodeFromRight(int index) {
 }
 
 private void removeNode(Node<T> current) {
-	/*
-	if(index+1 == size) {
-		head=tail=null;
-	} else {
-	*/
+	
 	if (current == head) {
 		removeNodeHead();
 	} else if (current == tail) {
@@ -263,7 +252,7 @@ private void removeNode(Node<T> current) {
 	//}
 	size--;
 }
-//private void removeNodeMiddle(int index) {
+
 private void removeNodeMiddle(Node<T> current) {
 	// TODO Auto-generated method stub
 	Node<T> nodeBefore = current.prev;
@@ -273,25 +262,7 @@ private void removeNodeMiddle(Node<T> current) {
 }
 
 private void removeNodeTail() {
-	// TODO Auto-generated method stub
-	int indNew = size-2;
-	//Node<T> nodeEndNew = getNode(indNew);
-/*
-	nodeEndNew.next = tail; //!!
-	tail.prev = nodeEndNew; //!!
-	tail.next = null;
-	tail.prev = nodeEndNew;
-	tail = nodeEndNew;
-	*/
-	
-	//tail = nodeEndNew;
-	/*
-	tail = getNode(size-1);
-	Node<T> nodeEndNew = getNode(size-1).prev;
-	getNode(size-1).prev.next = null;
-	nodeEndNew.next = null;
-	*/
-	//Node<T> nodeNewEnd = getNode(size-1).prev;
+	// Auto-generated method stub
 	Node<T> nodeNewEnd = tail.prev;
 	tail = nodeNewEnd;
 	nodeNewEnd.next = null;
@@ -300,12 +271,6 @@ private void removeNodeTail() {
 
 private void removeNodeHead() {
 	Node<T> nodeFirstNew = getNode(1);
-	/*
-	nodeFirstNew.prev = head; //!!!!!
-	head.prev = nodeFirstNew;
-	head = nodeFirstNew;
-	*/
-	//Node<T> nodeFirstNew = head;
 	nodeFirstNew.prev = null;
 	head = nodeFirstNew;
 			
