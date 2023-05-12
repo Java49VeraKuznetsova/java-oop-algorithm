@@ -49,14 +49,19 @@ void setUp() {
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
 		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
 		Integer [] expectedNo10_50_30 = { -20, 7,  100};
+	
+	 	
 		assertEquals(10, list.remove(0));
-		runTest(expectedNo10);
-		assertEquals(50, list.remove(2));
+	 runTest(expectedNo10);
+		assertEquals(50, list.remove(2)); 
 		runTest(expectedNo10_50);
+		
 		assertEquals(30, list.remove(3));
 		runTest(expectedNo10_50_30);
+		
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() -> list.remove(3));
+			
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() -> list.remove(-3));
 		

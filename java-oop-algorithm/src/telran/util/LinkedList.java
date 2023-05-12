@@ -34,7 +34,16 @@ private static class Node<T>{
 	@Override
 	public boolean remove(T pattern) {
 		// TODO Auto-generated method stub
-		return false;
+		
+			int index = indexOf(pattern);
+			boolean res = false;
+			if (index >= 0) {
+				remove(index);
+				res= true;
+			}
+			
+			return res;
+		
 	}
 
 	@Override
@@ -67,8 +76,19 @@ private static class Node<T>{
 	@Override
 	public T remove(int index) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		if (index <0 || index >= size) {
+			   throw new IndexOutOfBoundsException(index);
+		   }
+		//T remObj = array[index];
+		Node<T> nodeToRemove = getNode(index);
+	
+		//T remObj = getNode(index).obj;
+		removeNode(nodeToRemove);
+	//remove(index);
+		//return remObj;
+		return nodeToRemove.obj;
+			}
+
 
 	@Override
 	public T get(int index) {
@@ -82,15 +102,39 @@ private static class Node<T>{
 	@Override
 	public int indexOf(T pattern) {
 		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		int index = 0;
+		while (index < size && res == -1) {
+			if(isEqual(getNode(index).obj, pattern)) {
+				res = index;
+			}
+			index++;
+		}
+		return res;
 	}
+	
+  
 
 	@Override
 	public int lastIndexOf(T pattern) {
 		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		int index = size-1;
+		while (index>=0 && res == -1) {
+			if (isEqual(getNode(index).obj, pattern)) {
+				res=index;
+			}
+			index--;
+		}
+		return res;
 	}
 
+    private boolean isEqual(T object, T pattern) {
+		
+		return pattern == null ? object == pattern :
+			pattern.equals(object);
+	}
+	
 	@Override
 	public void sort() {
 		// TODO Auto-generated method stub
@@ -103,24 +147,51 @@ private static class Node<T>{
 
 	}
 
+	
 	@Override
 	public int indexOf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Auto-generated method stub
+		
+		int res = -1;
+		int index = 0;
+		while (index < size && res == -1) {
+			if (predicate.test(getNode(index).obj)) {
+				res = index;
+			}
+			index++;
+		}
+		return res;
 	}
 
 	@Override
 	public int lastIndexOf(Predicate<T> predicate) {
 		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		int index = size-1;
+		while (index >= 0 && res == -1) {
+			if (predicate.test(getNode(index).obj)) {
+				res = index;
+			}
+			index--;
+		}
+		return res;
 	}
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		// TODO Auto-generated method stub
-		return false;
-	}
+	
+			int oldSize = size;
+			for(int i = size - 1; i >= 0; i--) {
+				if(predicate.test(getNode(i).obj)) {
+					remove(i);
+				} 
+			}
+			return oldSize > size;
+		}
+	
 	private void addNode(int index, Node<T> node) {
+		
 		if(head == null) {
 			head = tail = node;
 		} else {
@@ -174,5 +245,70 @@ private Node<T> getNodeFromRight(int index) {
 		current = current.prev;
 	}
 	return current;
+}
+
+private void removeNode(Node<T> current) {
+	/*
+	if(index+1 == size) {
+		head=tail=null;
+	} else {
+	*/
+	if (current == head) {
+		removeNodeHead();
+	} else if (current == tail) {
+		removeNodeTail();
+	} else {
+		removeNodeMiddle(current);
+	}
+	//}
+	size--;
+}
+//private void removeNodeMiddle(int index) {
+private void removeNodeMiddle(Node<T> current) {
+	// TODO Auto-generated method stub
+	Node<T> nodeBefore = current.prev;
+	Node<T> nodeAfter = current.next;
+	nodeBefore.next = nodeAfter;
+	nodeAfter.prev = nodeBefore;
+}
+
+private void removeNodeTail() {
+	// TODO Auto-generated method stub
+	int indNew = size-2;
+	//Node<T> nodeEndNew = getNode(indNew);
+/*
+	nodeEndNew.next = tail; //!!
+	tail.prev = nodeEndNew; //!!
+	tail.next = null;
+	tail.prev = nodeEndNew;
+	tail = nodeEndNew;
+	*/
+	
+	//tail = nodeEndNew;
+	/*
+	tail = getNode(size-1);
+	Node<T> nodeEndNew = getNode(size-1).prev;
+	getNode(size-1).prev.next = null;
+	nodeEndNew.next = null;
+	*/
+	//Node<T> nodeNewEnd = getNode(size-1).prev;
+	Node<T> nodeNewEnd = tail.prev;
+	tail = nodeNewEnd;
+	nodeNewEnd.next = null;
+	
+}
+
+private void removeNodeHead() {
+	Node<T> nodeFirstNew = getNode(1);
+	/*
+	nodeFirstNew.prev = head; //!!!!!
+	head.prev = nodeFirstNew;
+	head = nodeFirstNew;
+	*/
+	//Node<T> nodeFirstNew = head;
+	nodeFirstNew.prev = null;
+	head = nodeFirstNew;
+			
+	
 }
 }
