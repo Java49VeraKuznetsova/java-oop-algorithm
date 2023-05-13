@@ -105,7 +105,9 @@ private static class Node<T>{
 		}
 		return res;
 	}
-	
+	/* V.R. There is possibility to reuse code
+	 * return indexOf(a -> isEqual(a, pattern));
+	 */
   
 
 	@Override
@@ -182,7 +184,11 @@ private static class Node<T>{
 			}
 			return oldSize > size;
 		}
-	
+	/* V.R. By the way
+     * for(int i = 0; i < size; i++)
+     * is also suitable
+     */
+
 	private void addNode(int index, Node<T> node) {
 		
 		if(head == null) {
@@ -252,6 +258,12 @@ private void removeNode(Node<T> current) {
 	//}
 	size--;
 }
+/* V.R.
+ *  This method is able to return deleted value
+ *  by following
+ *  return current.obj;
+ *  It will do the code simpler
+ */
 
 private void removeNodeMiddle(Node<T> current) {
 	// TODO Auto-generated method stub
