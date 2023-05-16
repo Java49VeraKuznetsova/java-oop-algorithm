@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 
 abstract class ListTest extends CollectionTest{
-//private static final int BIG_LENGTH = 100000;
+
 List<Integer> list = getList();
 
 @Override
@@ -139,7 +139,7 @@ protected Collection<Integer> getCollection() {
 	// my first version:
 	/*
 	protected void runTest(Integer[] expected) {
-	//private void runTest(Integer[] expected) {
+	{
 		int size = list.size() ;
 		Integer [] actual = new Integer[expected.length];
 		

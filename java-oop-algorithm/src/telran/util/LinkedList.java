@@ -118,7 +118,7 @@ public class LinkedList<T> implements List<T> {
 		
 		
 		T[] arrayNew = (T[]) new Object[size];
-	    arrayNew = toArray(arrayNew);
+	  
 	
 		arrayNew = toArray(arrayNew);
 		Arrays.sort(arrayNew, comp);
