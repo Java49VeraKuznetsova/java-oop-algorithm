@@ -1,5 +1,6 @@
 package telran.util;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -103,6 +104,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public void sort() {
 		//TODO
+		sort((Comparator<T>)Comparator.naturalOrder());
 
 	}
 
@@ -113,7 +115,19 @@ public class LinkedList<T> implements List<T> {
 		//2. By applying Arrays.sort you sort the array from #1
 		//3. Passing over all LinkedList nodes and setting references to objects (T)
 		// in the appropriate order from #2
-
+		
+		
+		T[] arrayNew = (T[]) new Object[size];
+	    arrayNew = toArray(arrayNew);
+	
+		arrayNew = toArray(arrayNew);
+		Arrays.sort(arrayNew, comp);
+		Node<T> current = head;
+		for (int i = 0; i < size; i++) {
+			current.obj = arrayNew[i];	
+		current = current.next;
+		}
+			
 	}
 
 	@Override
