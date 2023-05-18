@@ -89,7 +89,8 @@ public abstract class CollectionTest {
 	
 	
 		protected void runTest(Integer[] expected) {
-	
+	//Yuri
+			// Integer [] actual = collection.toArray(new Integer[0]);
 		Integer [] actual = new Integer[collection.size()];
 		actual = collection.toArray(actual);
 		
