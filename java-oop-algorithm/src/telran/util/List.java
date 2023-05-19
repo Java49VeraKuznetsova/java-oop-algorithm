@@ -10,9 +10,7 @@ public interface List<T> extends Collection<T> {
 void add(int index, T obj);
 T remove(int index);
 T get(int index) ;
-//int indexOf(T pattern);
-//int lastIndexOf(T pattern);
-//void sort();
+
 void sort(Comparator<T> comp);
 int indexOf(Predicate<T> predicate);
 int lastIndexOf(Predicate<T> predicate);
@@ -45,7 +43,7 @@ default int lastIndexOf(T pattern) {
 default void sort() {
 	sort((Comparator<T>)Comparator.naturalOrder());
 }
-
+/*
 @Override
 default T[] toArray(T[] ar) {
 	int size = size();
@@ -61,5 +59,5 @@ default T[] toArray(T[] ar) {
 	}
 	return ar;
 }
-
+*/
 }

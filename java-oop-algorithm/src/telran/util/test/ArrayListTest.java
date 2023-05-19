@@ -16,5 +16,13 @@ class ArrayListTest  extends ListTest{
 	protected <T> List<T> getList() {
 		return new ArrayList<>();
 	}
-
+	/*
+	@Test
+	void constractorExceptionTest() {
+		Integer[] expected = { -20,  10, 30, 50, 100, 7, -17};
+		Integer[] expected2 = {};
+	assertThrowsExactly(IllegalArgumentException.class, 
+				() -> new ArrayList());
+	}
+*/
 }

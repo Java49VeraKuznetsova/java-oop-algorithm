@@ -135,6 +135,7 @@ protected Collection<Integer> getCollection() {
 		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
 	}
 
+	
 
 	// my first version:
 	/*

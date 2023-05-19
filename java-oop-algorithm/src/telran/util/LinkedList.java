@@ -1,9 +1,11 @@
+
 package telran.util;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 //import telran.util.Range.RangeIterator;
@@ -12,19 +14,26 @@ public class LinkedList<T> implements List<T> {
 	Node<T> head;
 	Node<T> tail;
 	int size;
-
+	
 	private class LinkedListIterator implements Iterator<T>{
-
+        Node <T> current = head;
+        
 		@Override
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return false;
+			return current != null;
 		}
 
 		@Override
 		public T next() {
 			// TODO Auto-generated method stub
-			return null;
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			T curValue = current.obj;
+			current = current.next;
+			
+			return curValue;
 		}
 		
 	}
@@ -38,6 +47,18 @@ public class LinkedList<T> implements List<T> {
 		}
 	}
 
+
+	/*
+    public LinkedList(Node<T> head, int size) {
+    	if (head == null) {
+    		throw new IllegalArgumentException("head is null");
+    	}
+    	this.head = head;
+    	this.size = size;
+    }
+	*/
+	
+
 	@Override
 	public boolean add(T obj) {
 		add(size, obj);
@@ -49,36 +70,7 @@ public class LinkedList<T> implements List<T> {
 
 		return size;
 	}
-/*
-	@Override
-	public boolean remove(T pattern) {
-		boolean res = false;
-		int index = indexOf(pattern);
-		if (index > -1) {
-			res = true;
-			remove(index);
-		}
-		return res;
-	}
-*/
-	/*
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		Node<T> current = head;
-		int index = 0;
-		while (current != null) {
-			ar[index++] = current.obj;
-			current = current.next;
-		}
-		if (ar.length > size) {
-			ar[size] = null;
-		}
-		return ar;
-	}
-*/
+
 	@Override
 	public void add(int index, T obj) {
 		if (index < 0 || index > size) {
@@ -110,13 +102,6 @@ public class LinkedList<T> implements List<T> {
 		return getNode(index).obj;
 	}
 
-	/*
-	@Override
-	public int lastIndexOf(T pattern) {
-		return lastIndexOf(obj -> isEqual(obj, pattern));
-	}
-*/
-	
 
 	@Override
 	public void sort(Comparator<T> comp) {
@@ -278,12 +263,6 @@ public class LinkedList<T> implements List<T> {
 		}
 		size--;
 	}
-/*
-	private boolean isEqual(T object, T pattern) {
-
-		return pattern == null  ? object == pattern : pattern.equals(object);
-	}
-*/
 
 	@Override
 	public Iterator<T> iterator() {
@@ -292,3 +271,4 @@ public class LinkedList<T> implements List<T> {
 	}
 	
 	}
+	

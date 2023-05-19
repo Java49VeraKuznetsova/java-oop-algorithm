@@ -1,14 +1,20 @@
 package telran.util.test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import telran.util.ArrayList;
 import telran.util.Collection;
 
 public abstract class CollectionTest {
@@ -84,6 +90,22 @@ public abstract class CollectionTest {
 		
 	}
 	
+	@Test
+	void iteratorTest() {
+		int size = collection.size();
+		Iterator<Integer> it1 = collection.iterator();
+		Iterator<Integer> it2 = collection.iterator();
+		it1.next();
+		assertEquals(-20, it1.next());
+		for (int i=0; i<size; i++) {
+			it2.next();
+		}
+		assertThrows(NoSuchElementException.class,
+				  ()-> it2.next());
+
+		
+		
+	}
 	// my first version:
 	//abstract protected void runTest(Integer[] expected);
 	
