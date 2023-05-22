@@ -13,14 +13,13 @@ import org.junit.jupiter.api.Test;
 abstract class ListTest extends CollectionTest{
 
 List<Integer> list = getList();
-
 @Override
 protected Collection<Integer> getCollection() {
 	return list;
 }
 
 	abstract protected <T> List<T> getList() ;
-
+	
 	@Test
 	void testAddIndex() {
 		Integer [] expected0_500 = {500, 10, -20, 7, 50, 100, 30};
@@ -63,7 +62,7 @@ protected Collection<Integer> getCollection() {
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() -> list.get(-1));
 	}
-
+	
 	@Test
 	void testIndexOf() {
 		list.add(3, 1280);
@@ -76,7 +75,7 @@ protected Collection<Integer> getCollection() {
 		assertEquals(3, list.lastIndexOf(10));
 		assertEquals(-1, list.lastIndexOf((Integer)null));
 	}
-
+	
 	@Test
 	void testSort() {
 		Integer expected[] = {-20, 7, 10, 30,  50, 100 };
@@ -134,23 +133,17 @@ protected Collection<Integer> getCollection() {
 		list.add(-17);
 		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
 	}
-
-	
-
-	// my first version:
-	/*
-	protected void runTest(Integer[] expected) {
-	{
-		int size = list.size() ;
-		Integer [] actual = new Integer[expected.length];
-		
-		for(int i = 0; i < size; i++) {
-			actual[i] = list.get(i);
+	@Test
+	void clearPerformance() {
+		List<Integer> bigList = getList();
+		for(int i = 0; i < 1_000_000; i++) {
+			bigList.add(i);
 		}
-		assertArrayEquals(expected, actual);
-		
+		bigList.clear();
 	}
-	*/
+	
+	
+	
 	static private int evenOddCompare(Integer a, Integer b) {
 		int res = Math.abs(a % 2) - Math.abs(b % 2);
 		if (res == 0) {

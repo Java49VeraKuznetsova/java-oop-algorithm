@@ -10,36 +10,34 @@ public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
 	private int size;
-	/*
-	public ArrayList (T[] array, int size) {
-		if(size < 0) {
-			throw new IllegalArgumentException("size < 0");
-		}
-		this.array = array;
-		this.size = size;
-	}
-	*/
-	private class ArrayListIterator implements Iterator<T> {
-		int index = 0;
-		      
-		@Override
-		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return index<size;
-		}
-
-		@Override
-		public T next() {
-			// TODO Auto-generated method stub
-			if(!hasNext()) {
-				throw new NoSuchElementException();
-			}
-
-			return array[index++];
-		}
+	
+private class ArrayListIterator implements Iterator<T> {
+int currentIndex = 0;
+boolean flNext = false;
+	@Override
+	public boolean hasNext() {
 		
+		return currentIndex < size;
 	}
 
+	@Override
+	public T next() {
+		if(!hasNext()) {
+			throw new NoSuchElementException();
+		}
+		flNext = true;
+		return array[currentIndex++];
+	}
+	@Override
+	public void remove() {
+		if(!flNext) {
+			throw new IllegalStateException();
+		}
+		ArrayList.this.remove(--currentIndex);
+		flNext = false;
+	}
+	
+}
 	@SuppressWarnings("unchecked")
 	public ArrayList(int capacity) {
 		array = (T[]) new Object[capacity];
@@ -57,6 +55,12 @@ public class ArrayList<T> implements List<T> {
 		array[size] = obj;
 		size++;
 		return true;
+	}
+	@Override
+	public boolean removeIf(Predicate<T> predicate) {
+		//TODO rewrite the removeIf method of ArrayList for optimization (O[N])
+		
+		return false;
 	}
 
 	private void reallocate() {
@@ -155,31 +159,11 @@ public class ArrayList<T> implements List<T> {
 		return res;
 	}
 
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		int oldSize = size;
-//		int i = 0;
-//		while(i < size) {
-//			if(predicate.test(array[i])) {
-//				remove(i);
-//			} else {
-//				i++;
-//			}
-//		}
-		for(int i = size - 1; i >= 0; i--) {
-			if(predicate.test(array[i])) {
-				remove(i);
-			} 
-		}
-		return oldSize > size;
-	}
-
+	
 	@Override
 	public Iterator<T> iterator() {
 		
 		return new ArrayListIterator();
 	}
-
-
 
 }

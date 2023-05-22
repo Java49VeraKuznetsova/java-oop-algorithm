@@ -8,33 +8,38 @@ public interface Collection<T> extends Iterable<T>{
 boolean add(T obj);
 int size();
 boolean remove(T pattern);
-//T[] toArray(T[] array);
-boolean removeIf(Predicate<T> predicate);
-boolean contains(T pattern);
-
-default boolean isEqual(T object, T pattern) {
-
-	return pattern == null  ? object == pattern : pattern.equals(object);
-}
-
 default T[] toArray(T[] ar) {
-	int index=0;
 	int size = size();
-	Iterator<T> it = iterator();
-		
 	if (ar.length < size) {
 		ar = Arrays.copyOf(ar, size);
 	}
-	
-	while(it.hasNext()) {
-		 ar[index++]= it.next();
-	 }
-
-	
+	int index = 0;
+	for(T obj: this) {
+		ar[index++] = obj;
+	}
 	if (ar.length > size) {
 		ar[size] = null;
 	}
-	
+
 	return ar;
 }
+default boolean removeIf(Predicate<T> predicate) {
+	int oldSize = size();
+	Iterator<T> it = iterator();
+	while(it.hasNext()) {
+		T obj = it.next();
+		if(predicate.test(obj)) {
+			it.remove();
+		}
+	}
+	return oldSize > size();
+}
+boolean contains(T pattern);
+default  boolean isEqual(T object, T pattern) {
+
+	return pattern == null  ? object == pattern : pattern.equals(object);
+}
+default void clear() {
+	removeIf(element -> true);
+};
 }

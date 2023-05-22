@@ -1,42 +1,46 @@
-
 package telran.util;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
-//import telran.util.Range.RangeIterator;
-
 public class LinkedList<T> implements List<T> {
 	Node<T> head;
 	Node<T> tail;
 	int size;
-	
-	private class LinkedListIterator implements Iterator<T>{
-        Node <T> current = head;
-        
-		@Override
-		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return current != null;
-		}
-
-		@Override
-		public T next() {
-			// TODO Auto-generated method stub
-			if(!hasNext()) {
-				throw new NoSuchElementException();
-			}
-			T curValue = current.obj;
-			current = current.next;
-			
-			return curValue;
-		}
+private class LinkedListIterator implements Iterator<T> {
+Node<T> current = head;
+boolean flNext = false;
+	@Override
+	public boolean hasNext() {
 		
+		return current != null;
 	}
+
+	@Override
+	public T next() {
+		if (!hasNext()) {
+			throw new NoSuchElementException();
+		}
+		T res = current.obj;
+		current = current.next;
+		flNext = true;
+		return res;
+	}
+	@Override
+	public void remove() {
+		if (!flNext) {
+			throw new IllegalStateException();
+		}
+		Node<T> removedNode = current != null ? current.prev : tail;
+		removeNode(removedNode);
+		flNext = false;
+	}
+	
+	
+}
 	private static class Node<T> {
 		T obj;
 		Node<T> next;
@@ -46,18 +50,6 @@ public class LinkedList<T> implements List<T> {
 			this.obj = obj;
 		}
 	}
-
-
-	/*
-    public LinkedList(Node<T> head, int size) {
-    	if (head == null) {
-    		throw new IllegalArgumentException("head is null");
-    	}
-    	this.head = head;
-    	this.size = size;
-    }
-	*/
-	
 
 	@Override
 	public boolean add(T obj) {
@@ -71,6 +63,9 @@ public class LinkedList<T> implements List<T> {
 		return size;
 	}
 
+	
+
+	
 	@Override
 	public void add(int index, T obj) {
 		if (index < 0 || index > size) {
@@ -102,34 +97,34 @@ public class LinkedList<T> implements List<T> {
 		return getNode(index).obj;
 	}
 
-
 	@Override
 	public void sort(Comparator<T> comp) {
-			
-		T[] arrayNew = (T[]) new Object[size];
-	  
-	
-		arrayNew = toArray(arrayNew);
-		Arrays.sort(arrayNew, comp);
-		Node<T> current = head;
-		for (int i = 0; i < size; i++) {
-			current.obj = arrayNew[i];	
-		current = current.next;
-		}
-			
+		//TODO
+		//1. call the method toArray
+		//2. By applying Arrays.sort you sort the array from #1
+		//3. Passing over all LinkedList nodes and setting references to objects (T)
+		// in the appropriate order from #2
+		T[] array = toArray();
+	    Arrays.sort(array, comp);
+	    Node<T>current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	current.obj = array[index++];
+	    	current = current.next;
+	    }
+
 	}
-	
-	// Yuri
-	/*
-	T[] array = toArray();
-    Arrays.sort(array, comp);
-    Node<T>current = head;
-    int index = 0;
-    while(current != null) {
-    	current.obj = array[index++];
-    	current = current.next;
-    }
-*/
+	private T[] toArray() {
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
+	    Node<T> current = head;
+	    int index = 0;
+	    while(current != null) {
+	    	array[index++] = current.obj;
+	    	current = current.next;
+	    }
+	    return array;
+	}
 	@Override
 	public int indexOf(Predicate<T> predicate) {
 		int index = 0;
@@ -152,21 +147,7 @@ public class LinkedList<T> implements List<T> {
 		return current == null ? -1 : index;
 	}
 
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		Node<T> current = head;
-		Node<T> next = null;
-		int oldSize = size;
-		while (current != null) {
-			next = current.next;
-			if (predicate.test(current.obj)) {
-				removeNode(current);
-			}
-			current = next;
-
-		}
-		return oldSize > size;
-	}
+	
 
 	private void addNode(int index, Node<T> node) {
 		if (head == null) {
@@ -266,9 +247,11 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		
 		return new LinkedListIterator();
 	}
+
 	
-	}
+
 	
+
+}

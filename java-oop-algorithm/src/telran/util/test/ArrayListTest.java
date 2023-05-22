@@ -25,4 +25,5 @@ class ArrayListTest  extends ListTest{
 				() -> new ArrayList());
 	}
 */
+	
 }
