@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import telran.util.Range;
 
+
 class RangeTest {
 Range range = new Range(10, 14);
 	@Test
@@ -47,6 +48,7 @@ Range range = new Range(10, 14);
 		
 		
 	}
+	
 	@Test
 	void removeIfTest() {
 		Range range1 = new Range(1,4);
