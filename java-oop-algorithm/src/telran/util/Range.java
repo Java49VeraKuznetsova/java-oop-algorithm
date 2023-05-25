@@ -87,7 +87,8 @@ public class Range implements Iterable<Integer> {
 	}
 	public boolean removeIf(Predicate<Integer> predicate) {
 		//TODO
-		int oldSize = max-min-list.size();
+		//int oldSize = max-min-list.size();
+		int oldSize = list.size();
 		Iterator<Integer> it = iterator();
 		while (it.hasNext()) {
 			Integer num = it.next();
