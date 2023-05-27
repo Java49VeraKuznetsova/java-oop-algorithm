@@ -2,6 +2,9 @@ package telran.util;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+
 
 public class HashSet<T> implements Set<T> {
     private static final int DEFAULT_HASH_TABLE_SIZE = 16;
@@ -9,21 +12,67 @@ public class HashSet<T> implements Set<T> {
     private LinkedList<T>[] hashTable;
     
     private class HashSetIterator implements Iterator<T> {
-
+        boolean flNext = false;
+        int currentIndex = 0;
+        int currentIndexList = 0;
+        LinkedList<T> currentList = hashTable[0];
+		T res = null;
+        T prev = null;
+        // T current = currentList[currentIndexList];
+       // T current = currentList.
+        int prevIndex = -1;
+        //TODO
+       
+     
 		@Override
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return false;
+			while (currentIndex < hashTable.length && 
+				  (currentList == null || 
+				  // this is from webinar ??
+				  currentList.size() == 0 ||
+				  currentIndexList == currentList.size())) {
+		            
+			    currentIndex++;
+				currentList = hashTable[currentIndex];
+				currentIndexList = 0;
+			}
+					
+			
+			return currentIndex < hashTable.length;
 		}
 
 		@Override
 		public T next() {
 			// TODO Auto-generated method stub
-			return null;
+			
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+		  
+			res = currentList.get(currentIndexList);
+			
+			//if (res != null) {
+				flNext = true;
+				
+				currentIndexList++;
+				prev = res;
+				prevIndex = currentIndex;
+			
+		//	}
+						
+			return res;
 		}
 		@Override 
 		public void remove() {
 			//TODO
+			if(!flNext) {
+				throw new IllegalStateException();
+			}
+			
+			hashTable[prevIndex].remove(prev);
+			flNext = false;
+			size--;
 		}
     }
 		@SuppressWarnings ("unchecked")
@@ -60,7 +109,7 @@ public class HashSet<T> implements Set<T> {
 	}
 
 	private void recreation() {
-		// TODO Auto-generated method stub
+		
 		HashSet<T> tmp = new HashSet<>(hashTable.length *2);
 		for(int i = 0; i < hashTable.length; i++) {
 			if (hashTable[i] != null) {
@@ -120,11 +169,17 @@ public class HashSet<T> implements Set<T> {
 		*/
 		for (int i = 0; i < hashTable.length; i++) {
 			LinkedList<T> list = hashTable[i];
+			
+		
 			if (list != null) {
-				for(T obj: list) {
+				
+				//for(T obj: list) {
+				for(T obj: this) {	
 				ar[index++] = obj;
 				}
 			}
+			
+			
 		}
 		if (ar.length > size) {
 			ar[size] = null;
