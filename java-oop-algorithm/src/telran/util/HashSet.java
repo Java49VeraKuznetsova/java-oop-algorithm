@@ -4,88 +4,85 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-
 public class HashSet<T> implements Set<T> {
-    private static final int DEFAULT_HASH_TABLE_SIZE = 16;
+	private static final int DEFAULT_HASH_TABLE_SIZE = 16;
+	private LinkedList<T>[] hashTable;
 	private int size;
-    private LinkedList<T>[] hashTable;
-    
-    private class HashSetIterator implements Iterator<T> {
-        boolean flNext = false;
-        int currentIndex = 0;
-        int currentIndexList = 0;
-        LinkedList<T> currentList = hashTable[0];
-		T res = null;
-        T prev = null;
-        // T current = currentList[currentIndexList];
-       // T current = currentList.
-        int prevIndex = -1;
-        //TODO
-       
-     
+	private class HashSetIterator implements Iterator<T> {
+		Integer currentIteratorIndex;
+		Iterator<T> currentIterator;
+		Iterator<T> prevIterator;
+		boolean flNext = false;
+		HashSetIterator() {
+			initialState();
+		}
+		private void initialState() {
+			currentIteratorIndex = getCurrentIteratorIndex(-1);
+			if(currentIteratorIndex > -1) {
+				currentIterator = hashTable[currentIteratorIndex].iterator();
+				
+				
+			}
+			
+			
+		}
+		private int getCurrentIteratorIndex(int currentIndex) {
+			currentIndex++;
+			while(currentIndex < hashTable.length && 
+					(hashTable[currentIndex] == null || hashTable[currentIndex].size() == 0)) {
+				currentIndex++;
+			}
+			return currentIndex < hashTable.length ? currentIndex : -1;
+		}
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			while (currentIndex < hashTable.length && 
-				  (currentList == null || 
-				  // this is from webinar ??
-				  currentList.size() == 0 ||
-				  currentIndexList == currentList.size())) {
-		            
-			    currentIndex++;
-				currentList = hashTable[currentIndex];
-				currentIndexList = 0;
-			}
-					
 			
-			return currentIndex < hashTable.length;
+			return currentIteratorIndex >= 0;
 		}
 
 		@Override
 		public T next() {
-			// TODO Auto-generated method stub
-			
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
-		  
-			res = currentList.get(currentIndexList);
-			
-			//if (res != null) {
-				flNext = true;
-				
-				currentIndexList++;
-				prev = res;
-				prevIndex = currentIndex;
-			
-		//	}
-						
+			T res = currentIterator.next();
+			prevIterator = currentIterator;
+			updateState();
+			flNext = true;
 			return res;
 		}
-		@Override 
+		private void updateState() {
+			if(!currentIterator.hasNext()) {
+				currentIteratorIndex =
+						getCurrentIteratorIndex(currentIteratorIndex);
+				if(currentIteratorIndex >= 0) {
+					currentIterator = hashTable[currentIteratorIndex].iterator();
+				}
+			}
+			
+			
+		}
+		@Override
 		public void remove() {
-			//TODO
 			if(!flNext) {
 				throw new IllegalStateException();
 			}
-			
-			hashTable[prevIndex].remove(prev);
-			flNext = false;
+			prevIterator.remove();
 			size--;
+			flNext = false;
 		}
-    }
-		@SuppressWarnings ("unchecked")
-    	public HashSet(int hashTableSize) {
-    		hashTable = new LinkedList[hashTableSize];
-        	}
 		
-		public HashSet() {
-			this(DEFAULT_HASH_TABLE_SIZE);
-		}
-    
+	}
+	@SuppressWarnings("unchecked")
+	public HashSet(int hashTableSize) {
+		hashTable = new LinkedList[hashTableSize];
+	}
+	public HashSet() {
+		this(DEFAULT_HASH_TABLE_SIZE);
+	}
 	@Override
 	public Iterator<T> iterator() {
+		
 		return new HashSetIterator();
 	}
 
@@ -96,10 +93,10 @@ public class HashSet<T> implements Set<T> {
 			recreation();
 		}
 		int index = getHashTableIndex(obj);
-		if (hashTable[index] == null) {
+		if(hashTable[index] == null) {
 			hashTable[index] = new LinkedList<>();
 		}
-		if (!hashTable[index].contains(obj)) {
+		if(!hashTable[index].contains(obj)) {
 			hashTable[index].add(obj);
 			size++;
 			res = true;
@@ -108,24 +105,22 @@ public class HashSet<T> implements Set<T> {
 		return res;
 	}
 
-	private void recreation() {
+	private int getHashTableIndex(T obj) {
 		
-		HashSet<T> tmp = new HashSet<>(hashTable.length *2);
-		for(int i = 0; i < hashTable.length; i++) {
+		return Math.abs(obj.hashCode()) % hashTable.length;
+	}
+	private void recreation() {
+		HashSet<T> tmp = new HashSet<>(hashTable.length * 2);
+		for (int i = 0; i < hashTable.length; i++) {
 			if (hashTable[i] != null) {
 				for (T obj : hashTable[i]) {
 					tmp.add(obj);
 				} 
 			}
-		} 
+		}
 		this.hashTable = tmp.hashTable;
-	}
-	
-      private int getHashTableIndex(T obj) {
 		
-		return Math.abs(obj.hashCode()) % hashTable.length;
 	}
-
 	@Override
 	public int size() {
 		
@@ -138,55 +133,18 @@ public class HashSet<T> implements Set<T> {
 		int index = getHashTableIndex(pattern);
 		if (hashTable[index] != null) {
 			res = hashTable[index].remove(pattern);
-					}
-		if (res) {
-			size --; 
+			if (res) {
+				size--;
+			}
 		}
 		return res;
 	}
 
 	@Override
 	public boolean contains(T pattern) {
-		
-			int index = getHashTableIndex(pattern);
-			return hashTable[index] != null && 
-					hashTable[index].contains(pattern);
+		int index = getHashTableIndex(pattern);
+		return hashTable[index] != null && hashTable[index].contains(pattern);
 	}
-
-	@Override
-	//FIXME method should be remove after writing iterator
-	public T[] toArray(T[] ar) {
-		int size = size();
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		int index = 0;
-		// ЭТОТ МЕТОД ДОЛЖЕН БЫТЬ ПОСЛЕ ИФ, сейчас строка 124
-		/*
-		for(T obj: this) {
-			ar[index++] = obj;
-		}
-		*/
-		for (int i = 0; i < hashTable.length; i++) {
-			LinkedList<T> list = hashTable[i];
-			
-		
-			if (list != null) {
-				
-				//for(T obj: list) {
-				for(T obj: this) {	
-				ar[index++] = obj;
-				}
-			}
-			
-			
-		}
-		if (ar.length > size) {
-			ar[size] = null;
-		}
-
-		return ar;
 	
-	}
-   
+
 }
