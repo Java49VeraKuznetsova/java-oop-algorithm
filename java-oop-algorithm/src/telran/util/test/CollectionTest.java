@@ -42,6 +42,7 @@ public abstract class CollectionTest {
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
 		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
 		Integer [] expectedNo10_50_30 = { -20, 7,  100};
+	
 		assertTrue(collection.remove(numbers[0]));
 		runTest(expectedNo10);
 		Integer objToRemove = 50;
@@ -50,6 +51,7 @@ public abstract class CollectionTest {
 		assertTrue(collection.remove((Integer)30));
 		runTest(expectedNo10_50_30);
 		assertFalse(collection.remove((Integer)50));
+		
 	}
 	@Test
 	void testRemoveIfPredicate() {
