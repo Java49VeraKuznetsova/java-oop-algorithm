@@ -22,6 +22,7 @@ public class TreeSet<T> implements Set<T> {
 		Node<T> current;
 		Node<T> prev;
 		boolean flNext = false;
+		
 		TreeSetIterator() {
 			current = root == null ? null : getLeast(root);
 		}
@@ -50,6 +51,12 @@ public class TreeSet<T> implements Set<T> {
 			removeNode(prev);
 			flNext = false;
 		}
+	}
+	public TreeSet (Comparator <T> comp) {
+		this.comp = comp;
+	}
+	public TreeSet () {
+		this((Comparator<T>)Comparator.naturalOrder());
 	}
 	
 	@Override
@@ -150,22 +157,53 @@ public class TreeSet<T> implements Set<T> {
 
 	private void removeNode(Node<T> node) {
 		// TODO Auto-generated method stub
-		int res = comp.compare(node.obj, node.parent.obj);
+		
 		if (node.left != null && node.right != null) {
-			removeJunction(node, res);		
-			} else if (node.right != null) {
+			removeJunction(node);		
+			} else {
+			removeNonJuction(node);	
+			}
+		
+		/*
+		else if (node.right != null) {
 				removeRight(node, res);
 			} else if (node.left != null) {
 				removeLeft(node, res);
 			} else {
 				removeEnd(node, res);
 			}
+			*/
 		size--;
 		node = null;
 		
 	}
-	private void removeJunction(Node<T> node, int res) {
+	private void removeNonJuction(Node<T> node) {
 		// TODO Auto-generated method stub
+		Node<T> child = node.left == null ? node.right : node.left;
+		int res = comp.compare(node.obj, node.parent.obj);
+				if (node.parent == null) {
+					root = null;
+				} else {
+					if (child != null) {
+						if (node.left != null) {
+							removeLeft(node, res);
+						} else {
+							removeRight(node, res);
+						}
+					} else {
+						if (res < 0) {
+							node.parent.left = null;
+						} else {
+							node.parent.right = null;
+						}
+					}
+				}
+				
+		
+	}
+	private void removeJunction(Node<T> node) {
+		// TODO Auto-generated method stub
+	
 		Node <T> newJunction = getGreates(node.left);
 		Node <T> toRemove = newJunction;
 		newJunction.parent = node.parent;
@@ -190,13 +228,13 @@ public class TreeSet<T> implements Set<T> {
          if (res < 0) {
 			node.parent.left = node.left;
 		} else {
-			//TODO
+			
 			node.parent.right = node.left;
 		}
         
 	}
 	private void removeRight(Node<T> node, int res) {
-		// TODO Auto-generated method stub
+	
 		if (res < 0) {
 			//TODO
 			node.parent.left = node.right;
@@ -206,6 +244,7 @@ public class TreeSet<T> implements Set<T> {
 		
 		
 	}
+	/*
 	private void removeEnd(Node<T> node, int res) {
 		// TODO Auto-generated method stub
 		if (res < 0) {
@@ -215,6 +254,7 @@ public class TreeSet<T> implements Set<T> {
 		}
 		
 	}
+	*/
 	@Override
 	public boolean contains(T pattern) {
 		

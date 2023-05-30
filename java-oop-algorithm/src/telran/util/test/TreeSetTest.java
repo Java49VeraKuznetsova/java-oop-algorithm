@@ -8,11 +8,9 @@ public class TreeSetTest extends SetTest {
 	@Override
 	protected <T> Set<T> getSet() {
 		// TODO Auto-generated method stub
+		
 		return new TreeSet<>();
+		
 	}
 
 }
-
-
-
-
