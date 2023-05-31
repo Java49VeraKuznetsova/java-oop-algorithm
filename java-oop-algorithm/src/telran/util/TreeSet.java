@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class TreeSet<T> implements Set<T> {
+public class TreeSet<T> implements SortedSet<T> {
 	private static class Node<T> {
 		T obj;
 		Node<T> parent;
@@ -13,16 +13,27 @@ public class TreeSet<T> implements Set<T> {
 		Node(T obj) {
 			this.obj = obj;
 		}
+		void setNulls() {
+			parent = null;
+			left = null;
+			right = null;
+			obj = null;
+		}
 		
 	}
 	private Node<T> root;
 	private Comparator<T> comp;
 	private int size;
+	public TreeSet(Comparator<T> comp) {
+		this.comp = comp;
+	}
+	public TreeSet() {
+		this((Comparator<T>)Comparator.naturalOrder());
+	}
 	private class TreeSetIterator implements Iterator<T> {
 		Node<T> current;
 		Node<T> prev;
 		boolean flNext = false;
-		
 		TreeSetIterator() {
 			current = root == null ? null : getLeast(root);
 		}
@@ -51,13 +62,6 @@ public class TreeSet<T> implements Set<T> {
 			removeNode(prev);
 			flNext = false;
 		}
-	}
-	public TreeSet (Comparator <T> comp) {
-		this.comp = comp;
-	}
-	@SuppressWarnings("unchecked")
-	public TreeSet () {
-		this((Comparator<T>)Comparator.naturalOrder());
 	}
 	
 	@Override
@@ -102,12 +106,10 @@ public class TreeSet<T> implements Set<T> {
 		}
 		return current;
 	}
-	
 	private Node<T> getNodeParent(T obj) {
 		Node<T> current = root;
 		Node<T> parent = null;
 		int compRes;
-		//!!!!
 		while(current != null && (compRes = comp.compare(obj, current.obj)) != 0) {
 			parent = current;
 			current = compRes > 0 ? current.right : current.left;
@@ -144,73 +146,53 @@ public class TreeSet<T> implements Set<T> {
 		Node<T> node = getNode(pattern);
 		if (node != null) {
 			removeNode(node);
-			//!!!
-			res=true;
+			res = true;
 		}
 		
 		return res;
 	}
 
 	private void removeNode(Node<T> node) {
-		// TODO Auto-generated method stub
-		
-		if (node.left != null && node.right != null) {
-			removeJunction(node);		
-			} else if (node.parent == null){
-				removeRoot(node);
-			} else {
-				
-			removeNonJuction(node);	
-			}
-	
-		size--;
-	
-		
-	}
-	
-	private void removeNonJuction(Node<T> node) {
-			
-		Node<T> child = node.left == null ? node.right : node.left;
-		Node<T> parent = node.parent;
-		if (child != null) {
-			child.parent = node.parent;
-		}
-		if (parent.right == node) {
-			parent.right = child;
+		if(node.left != null && node.right != null) {
+			removeJunction(node);
 		} else {
-			parent.left = child;
+			removeNonJunction(node);
 		}
-	
-	}
-	
-	private void removeRoot(Node<T> node) {
+		size--;
 		
-		root = root.right == null ? root.left : root.right;
-		if (root != null) {
-			if (root != null) {
-				root.parent = null;
-			}
-		}
 	}
-	
 	private void removeJunction(Node<T> node) {
-	
-		Node<T> subNode = getSubNode(node.left);
-		
-		node.obj = subNode.obj;
-	
-		removeNonJuction(subNode);
+		Node<T> substitute = getMostNodeFrom(node.left);
+		node.obj = substitute.obj;
+		removeNonJunction(substitute);
 		
 	}
-	private Node<T> getSubNode(Node<T> node) {
-		
-		Node<T> current = node;
-		while(current.right != null) {
-			current = current.right;
+	private Node<T> getMostNodeFrom(Node<T> node) {
+		while(node.right != null) {
+			node = node.right;
 		}
-		return current;
+		return node;
 	}
-	
+	private void removeNonJunction(Node<T> node) {
+		
+		Node<T> parent = node.parent;
+		Node<T> child = node.left == null ? node.right : node.left;
+		if (parent == null) {
+			root = child;
+		} else {
+			if(node == parent.left) {
+				parent.left = child;
+			} else {
+				parent.right = child;
+			}
+			
+		}
+		if (child != null) {
+			child.parent = parent;
+		}
+		node.setNulls();
+		
+	}
 	@Override
 	public boolean contains(T pattern) {
 		
@@ -221,6 +203,26 @@ public class TreeSet<T> implements Set<T> {
 	public Iterator<T> iterator() {
 		
 		return new TreeSetIterator();
+	}
+	@Override
+	public T first() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T last() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T ceiling(T key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T floor(T key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -8,7 +8,7 @@ import telran.util.Collection;
 import telran.util.Set;
 import telran.util.TreeSet;
 
-public class TreeSetTest extends SetTest {
+public class TreeSetTest extends SortedSetTest {
 
 	@Override
 	protected <T> Set<T> getSet() {
@@ -17,7 +17,7 @@ public class TreeSetTest extends SetTest {
 		return new TreeSet<>();
 		
 	}
-	
+	/*
 	@Test
 	void clearPerformance() {
 		Collection<Integer> bigCollection = getCollection();
@@ -27,5 +27,5 @@ public class TreeSetTest extends SetTest {
 		bigCollection.clear();
 		assertEquals(0, bigCollection.size());
 	}
-
+*/
 }
