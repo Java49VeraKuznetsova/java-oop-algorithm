@@ -169,8 +169,7 @@ public class TreeSet<T> implements Set<T> {
 	}
 	
 	private void removeNonJuction(Node<T> node) {
-		// TODO Auto-generated method stub
-		
+			
 		Node<T> child = node.left == null ? node.right : node.left;
 		Node<T> parent = node.parent;
 		if (child != null) {
@@ -185,8 +184,7 @@ public class TreeSet<T> implements Set<T> {
 	}
 	
 	private void removeRoot(Node<T> node) {
-		// TODO Auto-generated method stub
-
+		
 		root = root.right == null ? root.left : root.right;
 		if (root != null) {
 			if (root.left != null) {
@@ -198,7 +196,7 @@ public class TreeSet<T> implements Set<T> {
 	}
 	
 	private void removeJunction(Node<T> node) {
-		// TODO Auto-generated method stub
+	
 		Node<T> subNode = getSubNode(node.left);
 		
 		node.obj = subNode.obj;
@@ -207,7 +205,7 @@ public class TreeSet<T> implements Set<T> {
 		
 	}
 	private Node<T> getSubNode(Node<T> node) {
-		// TODO Auto-generated method stub
+		
 		Node<T> current = node;
 		while(current.right != null) {
 			current = current.right;
