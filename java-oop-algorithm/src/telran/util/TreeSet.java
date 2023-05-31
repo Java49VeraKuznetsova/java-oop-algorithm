@@ -187,10 +187,10 @@ public class TreeSet<T> implements Set<T> {
 		
 		root = root.right == null ? root.left : root.right;
 		if (root != null) {
-			if (root.left != null) {
-				root = root.left;
+			if (node.left != null) {
+				root = node.left;
 			} else {
-				root = root.right;
+				root = node.right;
 			}
 		}
 	}
