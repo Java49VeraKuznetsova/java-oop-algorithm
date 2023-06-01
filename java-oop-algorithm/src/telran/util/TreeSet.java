@@ -206,23 +206,74 @@ public class TreeSet<T> implements SortedSet<T> {
 	}
 	@Override
 	public T first() {
+		
 		// TODO Auto-generated method stub
-		return null;
+		return getLeast(root).obj;
 	}
 	@Override
 	public T last() {
 		// TODO Auto-generated method stub
-		return null;
+		/*
+		Node<T> current = root;
+				while (current.right != null) {
+			current = current.right;
+		}
+		*/
+		Node<T> current  = getGreatest(root);
+		return current.obj;
+	}
+
+	
+	private Node<T> getGreatest (Node<T> node){
+		Node<T> current = node;
+		while (current.right != null) {
+			current = current.right;
+		}
+		return current;
 	}
 	@Override
 	public T ceiling(T key) {
 		// TODO Auto-generated method stub
-		return null;
+		T res = last();
+				
+		if(getNode(key) != null) {
+			res = key;
+		} else if (comp.compare(key, res)>0){
+			res = null;
+	
+		} else {
+
+			Iterator <T> it = this.iterator();
+			T current = root.obj;
+			while (comp.compare(key, current) > 0) {
+				current = it.next();
+				}
+			res = current;
+		}
+		
+		return res;
 	}
 	@Override
 	public T floor(T key) {
 		// TODO Auto-generated method stub
-		return null;
+		T res = first();
+		if (comp.compare(key, res) < 0) {
+			res = null;
+		} else if (getNode(key) != null) {
+			res = key;
+		} else {
+			Iterator <T> it = this.iterator();
+			T current = root.obj;
+			T prev = null;
+			while (comp.compare(key, current) < 0) {
+				prev=current;
+				current = it.next();
+			
+			}
+			res = prev;
+		}
+		
+		return res;
 	}
 
 }
