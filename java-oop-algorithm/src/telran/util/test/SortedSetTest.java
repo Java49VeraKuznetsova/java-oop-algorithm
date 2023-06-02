@@ -31,16 +31,19 @@ public abstract class SortedSetTest extends SetTest {
 		assertEquals(null, sortedSet.ceiling(110));
 		assertEquals(100, sortedSet.ceiling(90));
 		assertEquals(50, sortedSet.ceiling(40));
+		assertEquals(7, sortedSet.ceiling(4));
+		assertEquals(-20, sortedSet.ceiling(-40));
 		
 	}
 	@Test
 	void floorTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
-		//TODO test for the method floor
 		assertEquals(30, sortedSet.floor(30));
 		assertEquals(null, sortedSet.floor(-40));
 		assertEquals(7, sortedSet.floor(8));
 		assertEquals(-20, sortedSet.floor(0));
+		assertEquals(100, sortedSet.floor(110));
+		assertEquals(50, sortedSet.floor(60));
 	}
 
 }

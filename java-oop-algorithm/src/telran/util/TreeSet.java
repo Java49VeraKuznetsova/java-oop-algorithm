@@ -235,44 +235,39 @@ public class TreeSet<T> implements SortedSet<T> {
 	public T ceiling(T key) {
 		// TODO Auto-generated method stub
 		T res = last();
-				
-		if(getNode(key) != null) {
-			res = key;
-		} else if (comp.compare(key, res)>0){
-			res = null;
 	
-		} else {
-
-			Iterator <T> it = this.iterator();
-			T current = root.obj;
-			while (comp.compare(key, current) > 0) {
+		if (comp.compare(key, res)>0) {
+			res = null;
+		   }
+		else {
+			Iterator<T> it = this.iterator();
+			T current = first();
+			while(comp.compare(key, current)>0) {
 				current = it.next();
-				}
+			}
 			res = current;
 		}
-		
 		return res;
 	}
 	@Override
 	public T floor(T key) {
 		// TODO Auto-generated method stub
-		T res = first();
-		if (comp.compare(key, res) < 0) {
+		//T res = first();
+		T res;
+		T current = first();
+	
+		if (comp.compare(key, current) < 0) {
 			res = null;
-		} else if (getNode(key) != null) {
-			res = key;
 		} else {
 			Iterator <T> it = this.iterator();
-			T current = root.obj;
-			T prev = null;
-			while (comp.compare(key, current) < 0) {
-				prev=current;
-				current = it.next();
 			
-			}
-			res = prev;
+			T prev = null;
+			while (comp.compare(current, last()) < 0 && comp.compare(current, key)<=0) {
+				prev = current;
+				current = it.next();
+				}
+			res = comp.compare(key, last())>= 0 ? last() : prev;
 		}
-		
 		return res;
 	}
 
