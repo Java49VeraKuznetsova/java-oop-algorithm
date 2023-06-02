@@ -1,11 +1,16 @@
 package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
 import telran.util.Set;
 import telran.util.SortedSet;
+import telran.util.TreeSet;
 
 public abstract class SortedSetTest extends SetTest {
 
@@ -18,11 +23,21 @@ public abstract class SortedSetTest extends SetTest {
 	void firstTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(-20, sortedSet.first());
+	
+		TreeSet<Integer> treeTest = new TreeSet<>();
+		assertThrowsExactly(NoSuchElementException.class, () -> treeTest.first());
+	}
+	
+	private TreeSet<Integer> getEmpty() {
+		// TODO Auto-generated method stub
+		return new TreeSet<>();
 	}
 	@Test
 	void lastTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(100, sortedSet.last());
+		TreeSet<Integer> treeTest = new TreeSet<>();
+		assertThrowsExactly(NoSuchElementException.class, () -> treeTest.last());
 	}
 	@Test
 	void ceilingTest() {
@@ -33,6 +48,9 @@ public abstract class SortedSetTest extends SetTest {
 		assertEquals(50, sortedSet.ceiling(40));
 		assertEquals(7, sortedSet.ceiling(4));
 		assertEquals(-20, sortedSet.ceiling(-40));
+		assertNull(sortedSet.ceiling(110));
+		
+		assertThrowsExactly(NullPointerException.class, () -> sortedSet.ceiling(null));
 		
 	}
 	@Test
@@ -44,6 +62,7 @@ public abstract class SortedSetTest extends SetTest {
 		assertEquals(-20, sortedSet.floor(0));
 		assertEquals(100, sortedSet.floor(110));
 		assertEquals(50, sortedSet.floor(60));
+		assertThrowsExactly(NullPointerException.class, () -> sortedSet.floor(null));
 	}
 
 }
