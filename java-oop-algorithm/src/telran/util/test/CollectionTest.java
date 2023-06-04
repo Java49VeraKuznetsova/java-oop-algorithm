@@ -18,7 +18,7 @@ import telran.util.Collection;
 import telran.util.List;
 
 public abstract class CollectionTest {
-//TODO move tests of interface collection methods (5 methods) from ListTest
+//move tests of interface collection methods (5 methods) from ListTest
 //	to here
 	protected Integer[] numbers = { 10, -20, 7, 50, 100, 30 };
 	protected Collection<Integer> collection;
@@ -43,7 +43,6 @@ public abstract class CollectionTest {
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
 		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
 		Integer [] expectedNo10_50_30 = { -20, 7,  100};
-	
 		assertTrue(collection.remove(numbers[0]));
 		runTest(expectedNo10);
 		Integer objToRemove = 50;
@@ -52,7 +51,6 @@ public abstract class CollectionTest {
 		assertTrue(collection.remove((Integer)30));
 		runTest(expectedNo10_50_30);
 		assertFalse(collection.remove((Integer)50));
-		
 	}
 	@Test
 	void testRemoveIfPredicate() {
@@ -68,8 +66,8 @@ public abstract class CollectionTest {
 		assertTrue(collection.removeIf(a -> true));
 		assertEquals(0, collection.size());
 	}
-	protected abstract Integer[] getActual(Integer[] actual, int i);
-	protected abstract Integer[] getExpected(Integer[] ecpected);
+	protected abstract Integer[] getActual(Integer[] actual, int size);
+	protected abstract Integer[] getExpected(Integer[] expected);
 	@Test
 	void testToArrayForBigArray() {
 		Integer bigArray[] = new Integer[BIG_LENGTH];
@@ -78,7 +76,7 @@ public abstract class CollectionTest {
 		}
 		Integer actualArray[] = getActual(collection.toArray(bigArray), collection.size());
 		Integer expected[] = getExpected(numbers);
-	
+		
 		int size = collection.size();
 		for(int i = 0; i < size; i++) {
 			assertEquals(expected[i], actualArray[i]);
@@ -88,7 +86,7 @@ public abstract class CollectionTest {
 	}
 	@Test
 	void testToArrayForEmptyArray() {
-
+		
 		Integer actualArray[] = getActual(collection.toArray(new Integer[0]), collection.size());
 		Integer expected[] = getExpected(numbers);
 		assertArrayEquals(expected, actualArray);
@@ -145,14 +143,16 @@ public abstract class CollectionTest {
 	void clearPerformance() {
 		Collection<Integer> bigCollection = getCollection();
 		Random gen = new Random();
-		for(int i = 0; i < 1_000_000; i++) {
+		for(int i = 0; i < 1000000; i++) {
 			bigCollection.add(gen.nextInt());
 		}
 		bigCollection.clear();
 		assertEquals(0, bigCollection.size());
 	}
-	protected void runTest(Integer[] expected) {
-		Integer [] actual = collection.toArray(new Integer[0]);
+	protected void runTest(Integer[] expectedP) {
+		Integer [] actual = getActual(collection.toArray(new Integer[0]), collection.size());
+		
+		Integer expected[] = getExpected(expectedP);
 		
 		assertArrayEquals(expected, actual);
 		

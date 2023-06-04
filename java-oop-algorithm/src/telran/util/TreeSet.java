@@ -206,65 +206,48 @@ public class TreeSet<T> implements SortedSet<T> {
 	}
 	@Override
 	public T first() {
-		if (size == 0) {
-			throw new NoSuchElementException("first()");
+	
+		if(root == null) {
+			throw new NoSuchElementException();
 		}
+		T res = null;
+			res = getLeast(root).obj;
 		
-		return getLeast(root).obj;
+		return res;
 	}
 	@Override
 	public T last() {
-		if (size == 0) {
-			throw new NoSuchElementException("last()");
+		
+		if(root == null) {
+			throw new NoSuchElementException();
 		}
-	
-		return getMostNodeFrom(root).obj;
-	}
-
-	@Override
-	public T ceiling(T key) {
-		// TODO Auto-generated method stub
-		if (key == null) {
-			throw new NullPointerException("ceiling()");
-		}
-		T res = last();
-	
-		if (comp.compare(key, res)>0) {
-			res = null;
-		   }
-		else {
-			Iterator<T> it = this.iterator();
-			T current = first();
-			while(comp.compare(key, current)>0) {
-				current = it.next();
-			}
-			res = current;
-		}
+		T res = null;
+			res = getMostNodeFrom(root).obj;
+		
 		return res;
 	}
 	@Override
-	public T floor(T key) {
-		// TODO Auto-generated method stub
-		//T res = first();
-		if (key == null) {
-			throw new NullPointerException("floor()");
+	public T floor(T element) {
+		
+		return floorCeiling(element, true);
+	}
+	@Override
+	public T ceiling(T element) {
+		
+		return floorCeiling(element, false);
+	}
+	private T floorCeiling(T pattern, boolean isFloor) {
+		T res = null;
+		int compRes = 0;
+		Node<T> current = root;
+		while (current != null && (compRes = comp.compare(pattern, current.obj)) != 0) {
+			if ((compRes < 0 && !isFloor) || (compRes > 0 && isFloor) ) {
+				res = current.obj;
+			} 
+			current = compRes < 0 ? current.left : current.right;
 		}
-		T res;
-		T current = first();
-	
-		if (comp.compare(key, current) < 0) {
-			res = null;
-		} else {
-			Iterator <T> it = this.iterator();
-			
-			T prev = null;
-			while (comp.compare(current, last()) < 0 && comp.compare(current, key)<=0) {
-				prev = current;
-				current = it.next();
-				}
-			res = comp.compare(key, last())>= 0 ? last() : prev;
-		}
-		return res;
+		return current == null ? res : current.obj;
+		
 	}
 
 }

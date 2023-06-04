@@ -26,14 +26,8 @@ public abstract class SetTest extends CollectionTest {
 		return set;
 	}
 	
-	protected void runTest(Integer[] expected) {
-		Integer [] actual = collection.toArray(new Integer[0]);
-		Integer expectedCopy[] = Arrays.copyOf(expected, expected.length);
-		Arrays.sort(expectedCopy);
-		Arrays.sort(actual);
-		assertArrayEquals(expectedCopy, actual);
-		
-	}
+
+
 	
 @Override
 protected Integer[] getActual(Integer[] array, int size) {
