@@ -25,24 +25,40 @@ public class LineRecursion {
     	return res;
     }
     
-    public static long power(int a, int b) {
+    public static int power(int a, int b) {
     	//a - any number
     	//b - any positive number or zero
     	if (b < 0) {
     		throw new IllegalArgumentException("Pow cannot be negative value");
     	    	}
-    int aAbs = Math.abs(a);
-	
-	long res = aAbs;
+ 	
+	int res = 1;
 	if (b>0) {
 	
-          res += power(a, b-1);
+          res = sumMult(a, power(a, b-1));
 	}
-    	return sumNumber(a);
+    	return res;
     }
     
-    public static long sumNumber(int a) {
-		// TODO Auto-generated method stub
+   
+	private static int sumMult(int a, int b) {
+		// Auto-generated method stub
+		int res = 0;
+		int aAbs = Math.abs(a);
+		int bAbs = Math.abs(b);
+		
+		if (bAbs > 0) {
+			res = aAbs + sumMult(aAbs, bAbs-1);
+		}
+		if ((a < 0 && b>0)||(a>0 && b<0)){
+			res = - res;
+		}
+		
+		return res;
+	}
+	
+	public static long sumNumber(int a) {
+		//  Auto-generated method stub
     	//long sum = 1;
     	int aAbs = Math.abs(a);
     	int count = 1;
@@ -52,11 +68,12 @@ public class LineRecursion {
 		} else if (count < aAbs) {
     	
     		sum+= (aAbs-count)+sumNumber(aAbs-1); 
-    		count=count-1;
+    	
     	}
     	
 		return sum;
 	}
+	
 	public static long sum (int[] array) {
     	return sum(0, array);
     }
@@ -96,8 +113,7 @@ public class LineRecursion {
 		} else if (count < xAbs) {
 			
 			res+= (xAbs-count)+square(xAbs-1);
-			count=count+1;
-			
+				
 		}
 	
 		return res;
@@ -109,7 +125,6 @@ public class LineRecursion {
 		String substring(int ind);
 		 int length();
 		2. No cycles;*/
-		char currentSymbol = string.charAt(0);
 		
 				
 		return false;
