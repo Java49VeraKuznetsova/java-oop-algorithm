@@ -1,92 +1,55 @@
 package telran.algorithm.recursion;
 
 public class LineRecursion {
-    public static long factorial (int n) {
-    	long res =1;
-    	if (n < 0) {
-    		throw new IllegalArgumentException("Cannot be negative value");
-    	}
-    	if(n > 1) {
-    		res = n * factorial(n-1);
-    	}
-    	return res;
-    }
-    public static long pow(int a, int b) {
-    	//a - any number
-    	//b - any positive number or zero
-    	if (b < 0) {
-    		throw new IllegalArgumentException("Pow cannot be negative value");
-    	    	}
-    	long res = 1;
-    	if (b > 0) {
-    		res = a * pow (a, b-1); // a^b = a * a^(b-1)
-    	
-    	}
-    	return res;
-    }
-    
-    public static int power(int a, int b) {
-    	//a - any number
-    	//b - any positive number or zero
-    	if (b < 0) {
-    		throw new IllegalArgumentException("Pow cannot be negative value");
-    	    	}
- 	
-	int res = 1;
-	if (b>0) {
-	
-          res = sumMult(a, power(a, b-1));
-	}
-    	return res;
-    }
-    
-   
-	private static int sumMult(int a, int b) {
-		// Auto-generated method stub
-		int res = 0;
-		int aAbs = Math.abs(a);
-		int bAbs = Math.abs(b);
-		
-		if (bAbs > 0) {
-			res = aAbs + sumMult(aAbs, bAbs-1);
+	public static long factorial(int n) {
+		if(n < 0) {
+			throw new IllegalArgumentException("Cannot be negative value");
 		}
-		if ((a < 0 && b>0)||(a>0 && b<0)){
-			res = - res;
+		long res = 1;
+		if(n > 1) {
+			res = n*factorial(n - 1);
 		}
-		
 		return res;
 	}
-	
-	public static long sumNumber(int a) {
-		//  Auto-generated method stub
-    	//long sum = 1;
-    	int aAbs = Math.abs(a);
-    	int count = 1;
-    	long sum = aAbs;
-    	if (aAbs < 2) {
-			sum = aAbs;
-		} else if (count < aAbs) {
-    	
-    		sum+= (aAbs-count)+sumNumber(aAbs-1); 
-    	
-    	}
-    	
-		return sum;
+	public static long pow(int a, int b) {
+
+		// HW #18
+		//Limitations:
+		// 1. no cycles
+		// 2. only + or - for arithmetic operations
+		if (b < 0) {
+			throw new IllegalArgumentException();
+		}
+		long res = 1;
+		if (b > 0) {
+			res = multiply(a, pow(a, b - 1));
+		}
+		return res;
 	}
-	
-	public static long sum (int[] array) {
-    	return sum(0, array);
-    }
+
+	private static int multiply(int a, long b) {
+
+		int res = 0;
+		if (b != 0) {
+			res = b < 0 ? multiply(-a, -b): a + multiply(a, b - 1);
+		}
+		
+
+		return res;
+	}
+
+	public static long sum(int[] array) {
+		return sum(0, array);
+	}
 	private static long sum(int firstIndex, int[] array) {
 		long sum = 0;
-		if(firstIndex < array.length)
-		{
-			sum = array[firstIndex] + sum(firstIndex+1, array);
+		if (firstIndex < array.length) {
+			sum = array[firstIndex] + sum(firstIndex + 1, array);
 		}
-		return sum; 
+		return sum;
 	}
-	public static int [] reverse (int[] array) {
-		return reverse(array, 0, array.length-1);
+	public static int[] reverse(int[] array) {
+		return reverse(array, 0, array.length - 1);
 	}
 	private static int[] reverse(int[] array, int left, int right) {
 		
@@ -94,41 +57,64 @@ public class LineRecursion {
 			array[left] = array[left] + array[right];
 			array[right] = array[left] - array[right];
 			array[left] = array[left] - array[right];
-			reverse(array, left+1, right -1);
+			reverse(array, left + 1, right - 1);
 		}
 		return array;
 	}
-	public static long square(int x) {
-				// no cycles
-		//only arithmetic operation +
-		//no static variables
-		//no additional fields
-		// x  any int number;
-		int xAbs = Math.abs(x);
-		long res=xAbs;
-		int count = 1;
-		
-		if (xAbs < 2) {
-			res = xAbs;
-		} else if (count < xAbs) {
+	
+
+		public static long square(int x) { 
+
+		//no cycles 
+
+		//no * , / operators 
+
+		//no additional functions 
+
+		//no static fields  
+
+		//returns x ^ 2
+			// (x-1)^2 = x^2 -2x + 1; => x^2 = (x-1)^2 + 2x -1
+			long res = 0; 
+			if(x != 0) {
+				res = x < 0 ? square(-x) : x + x - 1 + square(x - 1);
+			}
+
+		return res; 
+
+		} 
+
+		public static boolean isSubstring(String string, String substr) { 
+
+		//  write function 
+
+		// returns true if a given 'substr' is indeed the //substring of a given `string` 
+
+		/* Challenges: 1. To apply only following methods of the class String: charAt(int ind);  
+
+		String substring(int ind); 
+
+		 int length(); 
+
+		2. No cycles;*/ 
+			boolean res = false;
+			if (string.length() >= substr.length()) {
+				res = isEqual(string, substr) ? true : isSubstring(string.substring(1), substr);
+			} 
+
+			return res;
+
+		}
+
+		private static boolean isEqual(String str, String substr) {
+			boolean res = false;
+			if (substr.length() == 0) {
+				res = true;
+			} else if (str.charAt(0) == substr.charAt(0)) {
+				res = isEqual(str.substring(1), substr.substring(1));
+			}
 			
-			res+= (xAbs-count)+square(xAbs-1);
-				
+			return res;
 		}
 	
-		return res;
-	}
-	public static boolean isSubstring(String string, String substr) {
-		// TODO write function
-		// returns true if a given 'substr' is indeed the //substring of a given `string`
-		/* Challenges: 1. To apply only following methods of the class String: charAt(int ind); 
-		String substring(int ind);
-		 int length();
-		2. No cycles;*/
-		
-				
-		return false;
-	}
-
-
 }

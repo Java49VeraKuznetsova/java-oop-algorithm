@@ -22,6 +22,7 @@ protected Collection<Integer> getCollection() {
 
 	abstract protected <T> List<T> getList() ;
 	
+	
 	@Test
 	void testAddIndex() {
 		Integer [] expected0_500 = {500, 10, -20, 7, 50, 100, 30};
