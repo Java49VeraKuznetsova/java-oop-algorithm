@@ -370,7 +370,7 @@ public class TreeSet<T> implements SortedSet<T> {
 
 	public void inversion() {
 		
-		int size = size()-1;
+		
 		
 		inversion(root);
 		comp = comp.reversed();
