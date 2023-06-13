@@ -8,6 +8,8 @@ import telran.util.HashSet;
 
 import static telran.util.stream.PrimitiveStreams.*;
 
+import java.util.Arrays;
+
 class PrimitiveStreamTest {
 
 	private static final int MIN_NUMBER = 1;
@@ -27,8 +29,23 @@ class PrimitiveStreamTest {
 			arrayPrev = arrayNext;
 		}
 	}
+	@Test 
+	void shuffleTest () {
+		int [] arrayPrev = randomUnique(N_NUMBERS, MIN_NUMBER, MAX_NUMBER);
+		
+		int [] arrayShuffle = shuffle(arrayPrev);
+		runArrayNotEqualTest (arrayPrev, arrayShuffle);
+		runArrayEqualsTest(arrayPrev, arrayShuffle);
+		
+	}
 
 
+	private void runArrayEqualsTest(int[] arrayPrev, int[] arrayShuffle) {
+		Arrays.sort(arrayShuffle);
+		Arrays.sort(arrayPrev);
+		assertArrayEquals(arrayPrev, arrayShuffle);
+		
+	}
 	private void runArrayNotEqualTest(int[] arrayPrev, int[] arrayNext) {
 		
 		int index = 0;
@@ -48,5 +65,7 @@ class PrimitiveStreamTest {
 		}
 		assertEquals(array.length, set.size());
 	}
+	
+	
 
 }
