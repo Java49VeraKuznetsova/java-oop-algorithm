@@ -32,10 +32,11 @@ class PrimitiveStreamTest {
 	@Test 
 	void shuffleTest () {
 		int [] arrayPrev = randomUnique(N_NUMBERS, MIN_NUMBER, MAX_NUMBER);
-		
+		for (int i = 0; i < N_RUNS; i++) {
 		int [] arrayShuffle = shuffle(arrayPrev);
 		runArrayNotEqualTest (arrayPrev, arrayShuffle);
 		runArrayEqualsTest(arrayPrev, arrayShuffle);
+		}
 		
 	}
 
