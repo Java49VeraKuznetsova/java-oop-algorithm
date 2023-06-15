@@ -395,6 +395,14 @@ public class TreeSet<T> implements SortedSet<T> {
 		}
 		return root;
 	}
+
+	@Override
+	public T get(T pattern) {
+		T res = null;
+		res = floor(pattern);
+		
+		return res != null && comp.compare(pattern, res) == 0 ? res : null;
+	}
 	
 
 }

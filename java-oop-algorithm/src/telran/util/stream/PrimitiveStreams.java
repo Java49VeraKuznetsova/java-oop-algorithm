@@ -18,12 +18,13 @@ public class PrimitiveStreams {
       }
       static public int [] shuffle(int[] array) {
     	  ArrayList <Integer> indexes = new ArrayList<>(array.length);
-   	  
+   	  // int [] res = new int[array.length];
+   	 //  final int [] index = {0};
     	  new Random().ints(0, array.length)
     	  .distinct().
     	  limit(array.length).
     	  forEach(el -> indexes.add(array[el]));
-    	  
+    	  //forEach(i -> res[index[0]++] = array[i])
     	  return indexes.stream()
     			  .mapToInt(n -> n)
     			  .toArray();
