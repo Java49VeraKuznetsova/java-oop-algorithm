@@ -25,13 +25,17 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 	@Override
 	public boolean containsKey(K key) {
 		// TODO Auto-generated method stub
-		return false;
+		Set<K> keys = keySet();
+		//boolean res = false;
+		//keys.contains(key);
+		return keys.contains(key);
 	}
 
 	@Override
 	public boolean containsValue(V value) {
 		// TODO Auto-generated method stub
-		return false;
+		Collection <V> values = values();
+		return values.contains(value);
 	}
 
 	@Override
@@ -46,7 +50,9 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 	@Override
 	public Collection<V> values() {
 		// TODO Auto-generated method stub
-		return null;
+		List<V> res = new ArrayList<>();
+		set.stream().map(e -> e.getValue()).forEach(value -> res.add(value));
+		return res;
 	}
 
 	@Override
@@ -57,7 +63,13 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 	@Override
 	public V remove(K key) {
 		//TODO
-		return null;
+		Entry<K, V> entry = set.get(new Entry<>(key, null));
+		V res = null;
+		if(entry != null) {
+			res = get(key);
+			set.remove(entry);
+		}
+		return res;
 	}
 
 }

@@ -25,6 +25,7 @@ public class Range implements Iterable<Integer> {
 			return current != null;
 		}
 
+		
 		@Override
 		public Integer next() {
 			if(current == null) {

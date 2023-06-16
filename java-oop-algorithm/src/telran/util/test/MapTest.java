@@ -25,5 +25,29 @@ protected Map<String, Integer> map;
 			assertEquals(values[i], map.get(keys[i]));
 		}
 	}
+	@Test
+	void containsKeyTest() {
+	
+		assertTrue(map.containsKey("lmn"));
+		assertTrue(map.containsKey("a"));
+		assertFalse(map.containsKey("bbb"));
+		
+	}
+	@Test
+	void containsValueTest() {
+		assertTrue(map.containsValue(1)); 
+		assertTrue(map.containsValue(2));
+		assertFalse(map.containsValue(344));
+	}
+	
+	@Test
+	void removeTest() {
+		map.remove("abc");
+		map.remove("a");
+		assertFalse(map.containsKey("abc"));
+		assertFalse(map.containsValue(1));
+		assertTrue (map.containsValue(2));
+		
+	}
 
 }

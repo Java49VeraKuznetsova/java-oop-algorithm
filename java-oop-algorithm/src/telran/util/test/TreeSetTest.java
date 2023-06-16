@@ -76,7 +76,7 @@ void setUp() {
 		
 	}
 	private void balanceOrder(int[] array) {
-		// TODO 
+		
 		//reorder array such that adding to tree will get a balanced tree
 		int right = array.length-1;
 		int left = 0;
