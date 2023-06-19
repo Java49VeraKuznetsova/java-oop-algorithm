@@ -106,22 +106,23 @@ public abstract class CollectionTest {
 	}
 	@Test
 	void testIteratorRemove() {
-		Iterator<Integer> it = collection.iterator();
 		
-		
-		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
-		Integer removed = it.next();
-		assertTrue(collection.contains(removed));
-		it.remove();
-		assertFalse(collection.contains(removed));
-		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
-		while(it.hasNext()) {
-			removed = it.next();
+			Iterator<Integer> it = collection.iterator();
 			
-		}
-		assertTrue(collection.contains(removed));
-		it.remove();
-		assertFalse(collection.contains(removed));
+			
+			assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+			Integer removed = it.next();
+			assertTrue(collection.contains(removed));
+			it.remove();
+			assertFalse(collection.contains(removed));
+			assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+			while(it.hasNext()) {
+				removed = it.next();
+				
+			}
+			assertTrue(collection.contains(removed));
+			it.remove();
+			assertFalse(collection.contains(removed));
 		
 		
 		
