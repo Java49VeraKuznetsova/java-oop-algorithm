@@ -49,9 +49,9 @@ public class LinkedHashSet<T> implements Set<T> {
     		}
     	
     		Node<T> removedNode = current != null ? current.prev : tail;
-    		removeNode(removedNode);
     		map.remove(removedNode.obj);
-    		flNext = false;
+    		removeNode(removedNode);
+    	  		flNext = false;
     		size--;
     	}
     	
