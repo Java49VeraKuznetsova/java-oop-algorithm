@@ -15,6 +15,7 @@ public class Range implements Iterable<Integer> {
 		this.min = min;
 		this.max = max;
 	}
+	
 	private class RangeIterator implements Iterator<Integer> {
 		Integer current = getCurrent(min - 1);
 		Integer prev = null;

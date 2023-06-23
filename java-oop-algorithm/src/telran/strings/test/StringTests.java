@@ -50,7 +50,7 @@ private String[] getStrings() {
 		runTest(js, strings);
 	}
 void JoinStringsTest() {
-	JoinStrings js = new JoinStringImpl();
+	JoinStrings js = new JoinStringsImpl();
 	String[] strings = getStrings();
 	String expected = getExpected();
 	runTest(js, strings);
