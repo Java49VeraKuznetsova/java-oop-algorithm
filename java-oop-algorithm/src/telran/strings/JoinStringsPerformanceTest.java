@@ -1,8 +1,10 @@
 package telran.strings;
 
-public  class JoinStringsPerformanceTest extends PerformanceTest implements JoinStrings {
+public  class JoinStringsPerformanceTest extends PerformanceTest {
+	private static final String delimeter = "#";
 	String[] strings;
     JoinStrings joinStrings;
+    
 	
 	public JoinStringsPerformanceTest(String testName, int nRuns, String[] strings, JoinStrings joinStrings) {
 	super(testName, nRuns);
@@ -10,18 +12,10 @@ public  class JoinStringsPerformanceTest extends PerformanceTest implements Join
 	this.joinStrings = joinStrings;
 }
 	
-// ????????
-	@Override
-	public String join(String[] strings, String delimiter) {
-		//  Auto-generated method stub
-		return joinStrings.join(strings, delimiter);
-	}
-
-
 	@Override
 	protected void runTest() {
 		
-		join (strings, "#");
+		joinStrings.join(strings, delimeter);
 	}
 
 }
