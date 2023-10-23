@@ -27,8 +27,10 @@ public class JoinStringsPerformanceAppl {
 				JoinStringsPerformanceTest testString = new JoinStringsPerformanceTest(testNameString, N_RUNS, strings,
 						joinStrings);
 				testString.run();
-			} catch (Exception e) {
+			} catch (ClassNotFoundException e) {
 				System.out.println("Wrong className:  " + args[0]);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			
 		}
