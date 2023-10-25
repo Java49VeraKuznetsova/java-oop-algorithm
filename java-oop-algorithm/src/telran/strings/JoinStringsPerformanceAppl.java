@@ -24,14 +24,17 @@ public class JoinStringsPerformanceAppl {
 				Class<JoinStrings> clazz = (Class<JoinStrings>) Class.forName(BASE_PACKAGE + className);
 				Constructor<JoinStrings> constructor = clazz.getConstructor();
 				JoinStrings joinStrings = constructor.newInstance();
-				String testNameString = getTestName(className);
-				JoinStringsPerformanceTest testString = new JoinStringsPerformanceTest(testNameString, N_RUNS, strings,
-						joinStrings);
-				testString.run();
+				//String testNameString = getTestName(className);
+				//JoinStringsPerformanceTest testString = new JoinStringsPerformanceTest(testNameString, N_RUNS, strings,
+						//joinStrings);
+				//testString.run();
+				JoinStringsPerformanceTest test = new JoinStringsPerformanceTest(getTestName(clazz.getSimpleName()), N_RUNS,strings,joinStrings);
+				test.run();
+
 			} catch (ClassNotFoundException e) {
-				System.out.println("Wrong className:  " + className);
+				System.out.println(e.getMessage()  + " not found");
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 			}
 		}
